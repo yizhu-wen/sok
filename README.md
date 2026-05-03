@@ -1,7 +1,7 @@
 # Is Audio Watermarking Robust to Removal Attacks?
 
-This repository contains the experiment code, paper source, and demo audio for
-the measurement study:
+This repository contains the experiment code and reviewer audio demo for the
+measurement study:
 
 > **Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement
 > Study**
@@ -22,15 +22,10 @@ The page is backed by `index.html` and the clipped audio files under
 
 - `scripts/`: benchmark runners, timing scripts, reporting utilities, and
   preflight checks
-- `ai_distortions/`: TTS and voice-conversion distortion pipelines used for
+- `ai_distortions_code/`: TTS and voice-conversion distortion pipelines used for
   AI-induced removal attacks
-- `distortion_demo_audio/`: speech and music audio examples for the distortion
-  demos used by the paper
-- `physical/`: physical re-recording and device-variation demo audio
-- `ai_distorted/`: TTS and voice-conversion demo audio for AI-induced distortions
 - `demo_audio_clips/`: 10-second-or-shorter reviewer previews generated from
-  the demo WAV files
-- `CCS_2026_Is_Audio_Watermarking_Robust_to_Attacks_/`: paper source and figures
+  the demo audio
 - `requirements/`: per-method dependency manifests
 - `repos/README.md`: expected layout for third-party method repositories
 - top-level `*_watermarking_gpu.py` files: classic watermarking baselines used
@@ -170,8 +165,7 @@ It includes:
   AI-induced distortions
 - 702 MP3 previews under `demo_audio_clips/`, each capped at 10 seconds
 - one representative clip per setting-level distortion condition
-- source links back to the original audio under `distortion_demo_audio/`,
-  `physical/`, and `ai_distorted/`
+- a manifest under `demo_audio_clips/manifest.json` used by `index.html`
 
 Rebuild the clipped audio previews and manifest with:
 

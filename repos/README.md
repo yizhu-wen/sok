@@ -1,7 +1,9 @@
 # Third-Party Repository Layout
 
 Several benchmark scripts expect external repositories to be available under
-fixed relative paths inside `repos/`.
+fixed relative paths inside `repos/`. This reviewer package includes this
+README only; clone or copy the upstream repositories here before running the
+corresponding wrappers.
 
 Expected layout:
 

@@ -14,6 +14,7 @@ Generation details:
 
 - deterministic random seed: `2026`
 - maximum preview duration: 10 seconds
-- source files: checked-in audio under `distortion_demo_audio/`, `physical/`,
-  and `ai_distorted/`
 - manifest: `demo_audio_clips/manifest.json`
+
+The manifest records the source WAV paths used when the clips were generated.
+This reviewer release keeps the playable MP3 previews in this directory.
