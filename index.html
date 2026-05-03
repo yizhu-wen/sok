@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audio Watermarking Robustness Demos</title>
+  <meta name="description" content="Reviewer demo page for audio watermarking removal attack examples.">
+  <style>
+    :root {
+      --ink: #17211f;
+      --muted: #5d6966;
+      --line: #d9e0de;
+      --paper: #ffffff;
+      --wash: #f6f8f5;
+      --accent: #2f6f52;
+      --blue: #315d8f;
+    }
+
+    * {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--blue);
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--wash);
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 28px 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .intro {
+      max-width: 920px;
+      margin-top: 10px;
+      color: var(--muted);
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.93rem;
+    }
+
+    .paper-info {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .paper-info h2 {
+      margin-bottom: 6px;
+      font-size: 1.15rem;
+    }
+
+    .paper-info p {
+      color: var(--muted);
+    }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .fact {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--wash);
+    }
+
+    .fact strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .fact span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .takeaway {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    main .wrap {
+      padding-top: 30px;
+      padding-bottom: 44px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .toc {
+      margin-bottom: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .toc h2 {
+      margin-bottom: 12px;
+    }
+
+    .toc-links {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .toc-links a {
+      display: block;
+      min-height: 76px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--wash);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .toc-links strong,
+    .toc-links span {
+      display: block;
+    }
+
+    .toc-links span {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .panel-head {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(320px, 1fr);
+      gap: 18px;
+      align-items: end;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--wash);
+    }
+
+    .panel-head p {
+      color: var(--muted);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    select,
+    input {
+      width: 100%;
+      min-height: 38px;
+      margin-top: 4px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .count {
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #edf2ef;
+      color: #3c4845;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+    }
+
+    td {
+      font-size: 0.94rem;
+    }
+
+    tbody tr:hover {
+      background: #f9fbfa;
+    }
+
+    .group-row th {
+      position: static;
+      padding: 12px;
+      background: #e4ece8;
+      color: var(--accent);
+      font-size: 0.9rem;
+      text-transform: none;
+    }
+
+    audio {
+      width: 240px;
+      max-width: 100%;
+    }
+
+    code {
+      color: var(--blue);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 0.88em;
+      overflow-wrap: anywhere;
+    }
+
+    .source {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .panel-head {
+        grid-template-columns: 1fr;
+      }
+
+      .filters,
+      .toc-links,
+      .facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      h1 {
+        font-size: 1.55rem;
+      }
+
+      .filters,
+      .toc-links,
+      .facts {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Audio Watermarking Removal Attack Demos</h1>
+      <p class="intro">
+        The demo table below lists one representative audio preview for each
+        distortion setting from <code>distortion_demo_audio/</code>,
+        <code>physical/</code>, or <code>ai_distorted/</code>. Every playable
+        preview is capped at 10 seconds.
+      </p>
+      <section class="paper-info" aria-labelledby="paper-info-title">
+        <h2 id="paper-info-title">Paper at a Glance</h2>
+        <p>
+          <strong>Is Audio Watermarking Robust to Removal Attacks? A Comprehensive
+          Measurement Study</strong> evaluates current audio watermarking systems
+          under quality-preserving removal attacks for speech and music.
+        </p>
+        <div class="facts">
+          <div class="fact"><strong>26</strong><span>watermarking schemes analyzed</span></div>
+          <div class="fact"><strong>10</strong><span>open-source methods reproduced</span></div>
+          <div class="fact"><strong>5</strong><span>speech and music datasets</span></div>
+          <div class="fact"><strong>127</strong><span>attack settings in the paper evaluation</span></div>
+        </div>
+        <p class="takeaway">
+          Key takeaway: no evaluated method is robust to all tested attacks.
+          Pitch shift, physical re-recording, and AI-induced voice conversion or
+          TTS are major failure modes. The paper points to frame-level message
+          repetition, broader frequency coverage, AI-distortion training, and
+          subjective listening tests as important design and evaluation lessons.
+        </p>
+      </section>
+      <nav class="quick-links" aria-label="Quick links">
+        <a href="README.md">README</a>
+        <a href="demo_audio_clips/manifest.json">Audio manifest</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">Table of Contents</h2>
+        <div class="toc-links">
+          <a href="#audio-table-title" data-category-link="Digital-level">
+            <strong>Digital-level distortions</strong>
+            <span id="toc-digital">Loading...</span>
+          </a>
+          <a href="#audio-table-title" data-category-link="Physical-level">
+            <strong>Physical-level distortions</strong>
+            <span id="toc-physical">Loading...</span>
+          </a>
+          <a href="#audio-table-title" data-category-link="AI-induced">
+            <strong>AI-induced distortions</strong>
+            <span id="toc-ai">Loading...</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="audio-table-title">
+        <div class="panel-head">
+          <div>
+            <h2 id="audio-table-title">Demo Audio Settings</h2>
+            <p>
+              Use the filters to narrow the table. Audio controls use clipped
+              MP3 previews under <code>demo_audio_clips/</code>.
+            </p>
+          </div>
+          <div class="filters" aria-label="Audio filters">
+            <label>
+              Category
+              <select id="category-filter">
+                <option value="">All</option>
+              </select>
+            </label>
+            <label>
+              Distortion
+              <select id="distortion-filter">
+                <option value="">All</option>
+              </select>
+            </label>
+            <label>
+              Source Group
+              <select id="group-filter">
+                <option value="">All</option>
+              </select>
+            </label>
+            <label>
+              Search
+              <input id="search-filter" type="search" placeholder="setting, method, or source">
+            </label>
+          </div>
+        </div>
+        <div id="row-count" class="count">Loading audio table...</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Distortion</th>
+                <th>Setting / Variant</th>
+                <th>Source Group</th>
+                <th>Preview</th>
+                <th>Clip</th>
+                <th>Source WAV</th>
+              </tr>
+            </thead>
+            <tbody id="audio-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    Static reviewer page for the audio watermarking robustness measurement study.
+  </footer>
+
+  <script>
+    const state = {
+      rows: [],
+      filtered: []
+    };
+
+    const els = {
+      tbody: document.getElementById("audio-rows"),
+      count: document.getElementById("row-count"),
+      category: document.getElementById("category-filter"),
+      distortion: document.getElementById("distortion-filter"),
+      group: document.getElementById("group-filter"),
+      search: document.getElementById("search-filter"),
+      tocDigital: document.getElementById("toc-digital"),
+      tocPhysical: document.getElementById("toc-physical"),
+      tocAi: document.getElementById("toc-ai")
+    };
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function pathHref(value) {
+      return encodeURI(String(value)).replace(/#/g, "%23");
+    }
+
+    function categorySlug(value) {
+      return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function optionList(rows, key) {
+      return [...new Set(rows.map((row) => row[key]))].sort((a, b) => {
+        return String(a).localeCompare(String(b), undefined, { numeric: true });
+      });
+    }
+
+    function fillSelect(select, values) {
+      const current = select.value;
+      select.innerHTML = '<option value="">All</option>' + values.map((value) => {
+        return `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`;
+      }).join("");
+      select.value = values.includes(current) ? current : "";
+    }
+
+    function populateFilters() {
+      fillSelect(els.category, optionList(state.rows, "category"));
+      fillSelect(els.distortion, optionList(state.rows, "distortion"));
+      fillSelect(els.group, optionList(state.rows, "source_group"));
+    }
+
+    function updateTocCounts() {
+      const counts = state.rows.reduce((acc, row) => {
+        acc[row.category] = (acc[row.category] || 0) + 1;
+        return acc;
+      }, {});
+      els.tocDigital.textContent = `${counts["Digital-level"] || 0} clips`;
+      els.tocPhysical.textContent = `${counts["Physical-level"] || 0} clips`;
+      els.tocAi.textContent = `${counts["AI-induced"] || 0} clips`;
+    }
+
+    function applyFilters() {
+      const category = els.category.value;
+      const distortion = els.distortion.value;
+      const group = els.group.value;
+      const query = els.search.value.trim().toLowerCase();
+
+      state.filtered = state.rows.filter((row) => {
+        if (category && row.category !== category) return false;
+        if (distortion && row.distortion !== distortion) return false;
+        if (group && row.source_group !== group) return false;
+        if (!query) return true;
+        return [
+          row.category,
+          row.distortion,
+          row.setting,
+          row.source_group,
+          row.selected_file,
+          row.source,
+          row.clip
+        ].some((value) => {
+          return String(value).toLowerCase().includes(query);
+        });
+      });
+
+      renderRows();
+    }
+
+    function renderRows() {
+      els.count.textContent = `${state.filtered.length} of ${state.rows.length} demo clips shown`;
+      let activeCategory = "";
+      let visibleIndex = 0;
+      els.tbody.innerHTML = state.filtered.map((row) => {
+        const duration = Number(row.duration_seconds).toFixed(2);
+        const start = Number(row.start_seconds).toFixed(2);
+        const clipHref = pathHref(row.clip);
+        const sourceHref = pathHref(row.source);
+        const groupRow = row.category === activeCategory ? "" : `
+          <tr class="group-row" id="${categorySlug(row.category)}">
+            <th colspan="8">${escapeHtml(row.category)}</th>
+          </tr>`;
+        activeCategory = row.category;
+        visibleIndex += 1;
+        return `
+          ${groupRow}
+          <tr>
+            <td>${visibleIndex}</td>
+            <td>${escapeHtml(row.category)}</td>
+            <td>${escapeHtml(row.distortion)}</td>
+            <td>${escapeHtml(row.setting)}</td>
+            <td>${escapeHtml(row.source_group)}</td>
+            <td><audio controls preload="none" src="${escapeHtml(clipHref)}"></audio></td>
+            <td><code>${duration}s from ${start}s</code></td>
+            <td class="source"><a href="${escapeHtml(sourceHref)}">${escapeHtml(row.source)}</a></td>
+          </tr>`;
+      }).join("");
+    }
+
+    async function loadRows() {
+      try {
+        const response = await fetch("demo_audio_clips/manifest.json");
+        if (!response.ok) {
+          throw new Error(`manifest returned ${response.status}`);
+        }
+        state.rows = await response.json();
+        state.filtered = state.rows;
+        populateFilters();
+        updateTocCounts();
+        applyFilters();
+      } catch (error) {
+        els.count.textContent = "Could not load demo_audio_clips/manifest.json. Use GitHub Pages or a local static server.";
+      }
+    }
+
+    [els.category, els.distortion, els.group].forEach((el) => {
+      el.addEventListener("change", applyFilters);
+    });
+    els.search.addEventListener("input", applyFilters);
+
+    document.querySelectorAll("[data-category-link]").forEach((link) => {
+      link.addEventListener("click", () => {
+        els.category.value = link.dataset.categoryLink;
+        applyFilters();
+      });
+    });
+
+    loadRows();
+  </script>
+</body>
+</html>

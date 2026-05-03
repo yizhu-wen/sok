@@ -1,0 +1,59 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environments
+.env
+.venv/
+venv/
+env/
+
+# Local logs and generated experiment outputs
+*.log
+runs/
+wandb/
+tensorboard/
+tts/**/generated/
+tts/**/experiments/
+tts/**/logs/
+tts/**/log/
+tts/**/logdir/
+tts/**/outputs/
+tts/**/output/
+vc/**/converted/
+vc/**/experiments/
+vc/**/logs/
+vc/**/log/
+vc/**/logdir/
+vc/**/outputs/
+vc/**/output/
+vc/**/output_*/
+
+# Reviewer release should not commit datasets, generated audio, or model weights.
+# Provide download instructions/checksums separately if these artifacts are needed.
+tts/**/*.wav
+tts/**/*.flac
+tts/**/*.mp3
+tts/**/*.npy
+tts/**/*.npz
+tts/**/*.pkl
+tts/**/*.pt
+tts/**/*.pth
+tts/**/*.ckpt
+tts/**/*.index
+vc/**/*.wav
+vc/**/*.flac
+vc/**/*.mp3
+vc/**/*.npy
+vc/**/*.npz
+vc/**/*.pkl
+vc/**/*.pt
+vc/**/*.pth
+vc/**/*.ckpt
+vc/**/*.index
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*~

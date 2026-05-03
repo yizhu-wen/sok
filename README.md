@@ -1,48 +1,82 @@
-# SOK Open-Science Evaluation Framework
+# Is Audio Watermarking Robust to Removal Attacks?
 
-This package contains the benchmark and reporting code used to evaluate audio
-watermarking methods across multiple speech and music datasets.
+This repository contains the experiment code, paper source, and demo audio for
+the measurement study:
 
-The release is intentionally curated:
-- Local machine paths and user-specific configuration have been removed.
-- Private logs and ad hoc trial outputs are not included.
-- Generated benchmark results should be reproduced from the code in this
-  package rather than inferred from local experiment leftovers.
+> **Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement
+> Study**
 
-## Included
+The project evaluates whether current audio watermarking systems survive
+quality-preserving removal attacks. It combines a component-wise survey of 26
+watermarking schemes with a large-scale benchmark of 10 reproducible,
+open-source methods across speech and music.
+
+For a reviewer-friendly overview, open the project page:
+
+- [Project overview page](index.html)
+
+If you publish with GitHub Pages, use the repository root as the Pages source so
+the page can load the clipped demo audio table.
+
+## What This Repo Contains
 
 - `scripts/`: benchmark runners, timing scripts, reporting utilities, and
   preflight checks
-- `ai_distortions/`: AI-based TTS and voice-conversion distortion pipelines
-  packaged with only inference-time code and no bundled checkpoints
-- `requirements/`: per-environment dependency snapshots
-- `repos/README.md`: expected layout for third-party repositories
-- top-level classic watermarking implementations used by the Kosta baselines
+- `ai_distortions/`: TTS and voice-conversion distortion pipelines used for
+  AI-induced removal attacks
+- `distortion_demo_audio/`: speech and music audio examples for the distortion
+  demos used by the paper
+- `physical/`: physical re-recording and device-variation demo audio
+- `ai_distorted/`: TTS and voice-conversion demo audio for AI-induced distortions
+- `demo_audio_clips/`: 10-second-or-shorter reviewer previews generated from
+  the demo WAV files
+- `CCS_2026_Is_Audio_Watermarking_Robust_to_Attacks_/`: paper source and figures
+- `requirements/`: per-method dependency manifests
+- `repos/README.md`: expected layout for third-party method repositories
+- top-level `*_watermarking_gpu.py` files: classic watermarking baselines used
+  by the Kosta-method wrappers
+- `index.html`: static GitHub Pages overview for reviewers
 
-## Not Included
+The public package intentionally excludes generated benchmark outputs, local
+virtual environments, private logs, and machine-specific paths.
 
-- local virtual environments
-- generated logs
-- generated benchmark outputs
-- reduced-sample or debugging artifacts from the private worktree
+## Paper Snapshot
 
-## Expected Layout
+The benchmark reproduces 10 audio watermarking methods:
 
-Populate the third-party repositories under `repos/` as described in
-`repos/README.md`. Generated outputs will be written under:
+| Method | Type | Runner |
+| --- | --- | --- |
+| AudioSeal | AI-based | `scripts/13_large_audioseal.py` |
+| WavMark | AI-based | `scripts/13_large_wavmark.py` |
+| SilentCipher | AI-based | `scripts/13_large_silentcipher.py` |
+| Timbre | AI-based | `scripts/13_large_timbre.py` |
+| RobustDNN / DNN-WM | AI-based | `scripts/13_large_dnn.py` |
+| AWARE | AI-based | `scripts/13_large_aware.py` |
+| audiowmark | Traditional / CLI | `scripts/13_large_audiowmark.py` |
+| FSVC | Traditional | `scripts/13_large_kosta.py` |
+| Patchwork | Traditional | `scripts/13_large_kosta.py` |
+| Norm-space | Traditional | `scripts/13_large_kosta.py` |
 
-- `results/benchmark/`
-- `results/timing/`
-- `results/visqol_unwm/`
-- `logs/`
+The paper evaluation covers:
 
-## Environment Setup
+- 5 speech/music datasets: LJSpeech, LibriSpeech, DAPS, M4Singer, and MoisesDB
+- 3 attack families: digital-level, physical-level, and AI-induced distortions
+- 127 attack settings in the current evaluation section
+- metrics for watermark recovery and perceptual quality, including bit accuracy,
+  SI-SNR, PESQ, ESTOI, ViSQOL, SECS, and subjective MUSHRA scores
 
-This project uses separate environments for different algorithms. The
-requirements files are kept per environment rather than as one monolithic
-`requirements.txt`.
+The main takeaway is that no evaluated method is robust to every tested
+quality-preserving removal attack. Pitch shift, physical re-recording, and
+AI-induced voice conversion or TTS are the major failure modes.
 
-Examples:
+## Setup
+
+This project uses separate Python environments because the evaluated methods
+depend on incompatible Python, PyTorch, TensorFlow, and CUDA versions. Treat the
+files under `requirements/` as reference manifests, then adjust CUDA wheels and
+Python minor versions for your host as needed.
+
+Example:
 
 ```bash
 python -m venv envs/viz
@@ -52,29 +86,40 @@ python -m venv envs/audioseal
 envs/audioseal/bin/pip install -r requirements/audioseal.txt
 ```
 
-Some environments require CUDA-enabled PyTorch or TensorFlow builds. Treat the
-provided requirement files as reference manifests and adjust CUDA wheel indexes
-or platform-specific packages for your machine as needed.
+Install system tools separately:
+
+- `ffmpeg`
+- `audiowmark`, exposed through `SOK_AUDIOWMARK_BIN`
+- CUDA libraries required by the specific GPU environments
+
+Several methods also require external upstream repositories or checkpoints. See
+[`repos/README.md`](repos/README.md) for the expected repository layout.
 
 ## Configuration
 
-Set the required paths with environment variables or edit `scripts/config.py`.
+Set machine-local paths with environment variables or edit `scripts/config.py`.
 The most important variables are:
 
+- `SOK_STORAGE_DIR`
 - `SOK_DATASET_DIR`
 - `SOK_NOISE_DIR`
 - `SOK_RIR_DIR`
 - `SOK_AUDIOWMARK_BIN`
+- `SOK_AUDIOWMARK_LIB`
 - `SOK_NVIDIA_BASE`
 - `SOK_PTXAS_DIR`
 
-Run the preflight check before launching benchmarks:
+Run the preflight check before launching full benchmarks:
 
 ```bash
 envs/viz/bin/python scripts/preflight.py
 ```
 
-## Running Full Benchmarks
+## Running Benchmarks
+
+Each `scripts/13_large_*.py` file embeds a method-specific watermark, applies
+the configured distortion suite, decodes the watermark, and writes aggregate
+JSON results under `results/benchmark/{dataset_key}/{algorithm}.json`.
 
 Examples:
 
@@ -82,9 +127,22 @@ Examples:
 envs/audioseal/bin/python scripts/13_large_audioseal.py
 envs/timbre/bin/python scripts/13_large_timbre.py
 envs/dnn_wm/bin/python scripts/13_large_dnn.py
+envs/kosta/bin/python scripts/13_large_kosta.py
 ```
 
-These scripts default to the dataset roots defined in `scripts/config.py`.
+The shared benchmark utility supports checkpoint resume. If a run is interrupted,
+rerun the same command and completed files will be skipped.
+
+## Timing Experiments
+
+Timing scripts are under `scripts/14_timing_*.py`. They measure method-level
+embed/decode cost and write results under `results/timing/`.
+
+```bash
+envs/audioseal/bin/python scripts/14_timing_audioseal.py
+envs/wavmark/bin/python scripts/14_timing_wavmark.py
+python scripts/14_timing_report.py
+```
 
 ## Reporting
 
@@ -97,8 +155,31 @@ python3 scripts/18_dataset_full_excel.py \
   --suffixes __plain__
 ```
 
+Generated outputs are intentionally not committed. See
+[`results/README.md`](results/README.md) for the expected output structure.
+
+## Demo Media
+
+The reviewer page includes:
+
+- an audio-first table grouped into digital-level, physical-level, and
+  AI-induced distortions
+- 702 MP3 previews under `demo_audio_clips/`, each capped at 10 seconds
+- one representative clip per setting-level distortion condition
+- source links back to the original audio under `distortion_demo_audio/`,
+  `physical/`, and `ai_distorted/`
+
+Rebuild the clipped audio previews and manifest with:
+
+```bash
+python3 scripts/build_reviewer_audio_demo.py
+```
+
 ## Reproducibility Notes
 
-If you need a smaller validation subset while bringing up a new machine, use
-explicit environment variables such as `SOK_N_SAMPLES`. Keep those subset runs
-separate from the full benchmark outputs.
+- Keep full benchmark results separate from reduced-sample validation runs.
+- Use reduced sample counts only for bring-up or debugging, and label those
+  outputs separately from full benchmark results.
+- Do not commit local datasets, model checkpoints, logs, or generated outputs.
+- If upstream method APIs change, prefer updating the corresponding wrapper
+  script instead of changing shared benchmark semantics.

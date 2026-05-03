@@ -1,0 +1,668 @@
+{
+  "sources": {
+    "ai_distorted/tts/Fastspeech2/audioseal/fine_hifi/412.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.4375
+    },
+    "ai_distorted/tts/Fastspeech2/audioseal/gl/126.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/tts/Fastspeech2/audioseal/u_hifi/381.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/tts/Fastspeech2/fsvc/fine_hifi/240.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.35
+    },
+    "ai_distorted/tts/Fastspeech2/fsvc/gl/439.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.575
+    },
+    "ai_distorted/tts/Fastspeech2/fsvc/u_hifi/115.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/tts/Fastspeech2/patchwork/gl/468.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/tts/Fastspeech2/patchwork/u_hifi/374.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.35
+    },
+    "ai_distorted/tts/Fastspeech2/timbre/fine_hifi/336.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "ai_distorted/tts/Fastspeech2/timbre/gl/254.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "ai_distorted/tts/Fastspeech2/timbre/u_hifi/358.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "ai_distorted/tts/Fastspeech2/wavmark/gl/236.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/tts/Fastspeech2/wavmark/u_hifi/485.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/tts/Tacotron2/audioseal/fine_hifi/29.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/tts/Tacotron2/audioseal/gl/202.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/tts/Tacotron2/audioseal/u_hifi/417.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.3125
+    },
+    "ai_distorted/tts/Tacotron2/audiowmark/gl/260.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/tts/Tacotron2/audiowmark/u_hifi/445.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/tts/Tacotron2/fsvc/fine_hifi/39.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.425
+    },
+    "ai_distorted/tts/Tacotron2/fsvc/gl/55.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.75
+    },
+    "ai_distorted/tts/Tacotron2/fsvc/u_hifi/345.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.4
+    },
+    "ai_distorted/tts/Tacotron2/norm_space/gl/55.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.35
+    },
+    "ai_distorted/tts/Tacotron2/norm_space/u_hifi/481.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.45
+    },
+    "ai_distorted/tts/Tacotron2/patchwork/gl/334.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.525
+    },
+    "ai_distorted/tts/Tacotron2/patchwork/u_hifi/230.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/tts/Tacotron2/silentcipher/fine_hifi/469.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/tts/Tacotron2/silentcipher/gl/405.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/tts/Tacotron2/silentcipher/u_hifi/482.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/tts/Tacotron2/timbre/fine_hifi/9.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "ai_distorted/tts/Tacotron2/timbre/gl/382.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "ai_distorted/tts/Tacotron2/timbre/u_hifi/332.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.9
+    },
+    "ai_distorted/tts/Tacotron2/wavmark/gl/260.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/tts/Tacotron2/wavmark/u_hifi/482.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/tts/YourTTS/audioseal/279.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/tts/YourTTS/audiowmark/278.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/tts/YourTTS/fsvc/341.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.35
+    },
+    "ai_distorted/tts/YourTTS/norm_space/20.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.525
+    },
+    "ai_distorted/tts/YourTTS/patchwork/104.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/tts/YourTTS/silentcipher/293.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/tts/YourTTS/timbre/341.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/tts/YourTTS/wavmark/297.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/AdaInVC/audioseal/add_wm/6.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/AdaInVC/audioseal/rm_wm/386.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/AdaInVC/audiowmark/add_wm/500.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/AdaInVC/audiowmark/rm_wm/498.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/AdaInVC/fsvc/add_wm/267.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/AdaInVC/fsvc/rm_wm/68.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.45
+    },
+    "ai_distorted/vc/AdaInVC/norm_space/add_wm/84.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/AdaInVC/norm_space/rm_wm/493.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.425
+    },
+    "ai_distorted/vc/AdaInVC/patchwork/add_wm/210.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/AdaInVC/patchwork/rm_wm/468.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/AdaInVC/silentcipher/add_wm/369.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/AdaInVC/silentcipher/rm_wm/357.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/AdaInVC/timbre/add_wm/263.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.9
+    },
+    "ai_distorted/vc/AdaInVC/timbre/rm_wm/273.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/AdaInVC/wavmark/add_wm/441.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/AdaInVC/wavmark/rm_wm/498.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/FragmentVC/audioseal/add_wm/148.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.5625
+    },
+    "ai_distorted/vc/FragmentVC/audioseal/rm_wm/111.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.625
+    },
+    "ai_distorted/vc/FragmentVC/audiowmark/add_wm/138.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/FragmentVC/audiowmark/rm_wm/350.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/FragmentVC/fsvc/add_wm/199.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.45
+    },
+    "ai_distorted/vc/FragmentVC/fsvc/rm_wm/207.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/FragmentVC/norm_space/add_wm/280.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/FragmentVC/norm_space/rm_wm/18.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/FragmentVC/patchwork/add_wm/474.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.675
+    },
+    "ai_distorted/vc/FragmentVC/patchwork/rm_wm/317.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/FragmentVC/silentcipher/add_wm/3.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/FragmentVC/silentcipher/rm_wm/171.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/FragmentVC/timbre/add_wm/187.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/FragmentVC/timbre/rm_wm/335.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.4
+    },
+    "ai_distorted/vc/FragmentVC/wavmark/add_wm/112.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/FragmentVC/wavmark/rm_wm/271.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/MediumVC/audioseal/add_wm/152.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.3125
+    },
+    "ai_distorted/vc/MediumVC/audioseal/rm_wm/145.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.4375
+    },
+    "ai_distorted/vc/MediumVC/audiowmark/add_wm/247.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/MediumVC/audiowmark/rm_wm/207.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/MediumVC/fsvc/add_wm/282.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.55
+    },
+    "ai_distorted/vc/MediumVC/fsvc/rm_wm/2.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.45
+    },
+    "ai_distorted/vc/MediumVC/norm_space/add_wm/31.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/MediumVC/norm_space/rm_wm/156.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/vc/MediumVC/patchwork/add_wm/259.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.525
+    },
+    "ai_distorted/vc/MediumVC/patchwork/rm_wm/376.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.4
+    },
+    "ai_distorted/vc/MediumVC/silentcipher/add_wm/337.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/MediumVC/silentcipher/rm_wm/392.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/MediumVC/timbre/add_wm/388.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/MediumVC/timbre/rm_wm/55.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.4
+    },
+    "ai_distorted/vc/MediumVC/wavmark/add_wm/291.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/MediumVC/wavmark/rm_wm/144.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/RVC/audioseal/add_wm/62.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.3125
+    },
+    "ai_distorted/vc/RVC/audioseal/rm_wm/242.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/vc/RVC/audiowmark/add_wm/148.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/RVC/audiowmark/rm_wm/396.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/RVC/fsvc/add_wm/143.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.6
+    },
+    "ai_distorted/vc/RVC/fsvc/rm_wm/10.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.575
+    },
+    "ai_distorted/vc/RVC/norm_space/add_wm/129.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/vc/RVC/norm_space/rm_wm/59.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.55
+    },
+    "ai_distorted/vc/RVC/patchwork/add_wm/256.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.5
+    },
+    "ai_distorted/vc/RVC/patchwork/rm_wm/450.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.55
+    },
+    "ai_distorted/vc/RVC/silentcipher/add_wm/169.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.2
+    },
+    "ai_distorted/vc/RVC/silentcipher/rm_wm/402.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/RVC/timbre/add_wm/389.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "ai_distorted/vc/RVC/timbre/rm_wm/310.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.6
+    },
+    "ai_distorted/vc/RVC/wavmark/add_wm/144.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/RVC/wavmark/rm_wm/29.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/YourTTS_VC/audioseal/add_wm/477.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.375
+    },
+    "ai_distorted/vc/YourTTS_VC/audioseal/rm_wm/480.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.4375
+    },
+    "ai_distorted/vc/YourTTS_VC/audiowmark/add_wm/168.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/YourTTS_VC/audiowmark/rm_wm/208.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/YourTTS_VC/fsvc/add_wm/51.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.525
+    },
+    "ai_distorted/vc/YourTTS_VC/fsvc/rm_wm/187.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.325
+    },
+    "ai_distorted/vc/YourTTS_VC/norm_space/add_wm/354.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.65
+    },
+    "ai_distorted/vc/YourTTS_VC/norm_space/rm_wm/467.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.55
+    },
+    "ai_distorted/vc/YourTTS_VC/patchwork/add_wm/322.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.45
+    },
+    "ai_distorted/vc/YourTTS_VC/patchwork/rm_wm/496.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.475
+    },
+    "ai_distorted/vc/YourTTS_VC/silentcipher/add_wm/373.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/YourTTS_VC/silentcipher/rm_wm/256.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.0
+    },
+    "ai_distorted/vc/YourTTS_VC/timbre/add_wm/156.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.8
+    },
+    "ai_distorted/vc/YourTTS_VC/timbre/rm_wm/182.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.6
+    },
+    "ai_distorted/vc/YourTTS_VC/wavmark/add_wm/259.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "ai_distorted/vc/YourTTS_VC/wavmark/rm_wm/139.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "physical/device/hyperx_mic_tests/audioseal/LJ016-0380_hyperx.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.5
+    },
+    "physical/device/hyperx_mic_tests/audiowmark/LJ016-0380_hyperx.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "physical/device/hyperx_mic_tests/fsvc/LJ016-0380_hyperx.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.45
+    },
+    "physical/device/hyperx_mic_tests/norm_space/LJ016-0380_hyperx.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.425
+    },
+    "physical/device/hyperx_mic_tests/patchwork/LJ005-0141_hyperx.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.6
+    },
+    "physical/device/hyperx_mic_tests/robustdnn/LJ005-0141_hyperx.wav": {
+      "algorithm": "dnn_watermark",
+      "bit_accuracy": 0.544922
+    },
+    "physical/device/hyperx_mic_tests/silentcipher/LJ016-0380_hyperx.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": 0.0
+    },
+    "physical/device/hyperx_mic_tests/timbre/LJ022-0106_hyperx.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "physical/device/hyperx_mic_tests/wavmark/LJ016-0380_hyperx.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": 0.5
+    },
+    "physical/device/logitech_speaker_tests/audioseal/LJ005-0141_logitech.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.3125
+    },
+    "physical/device/logitech_speaker_tests/audiowavmark/LJ004-0186_logitech.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "physical/device/logitech_speaker_tests/fsvc/LJ005-0141_logitech.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.525
+    },
+    "physical/device/logitech_speaker_tests/norm_space/LJ004-0186_logitech.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.6
+    },
+    "physical/device/logitech_speaker_tests/patchwork/LJ001-0072_logitech.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.55
+    },
+    "physical/device/logitech_speaker_tests/robustdnn/LJ022-0106_logitech.wav": {
+      "algorithm": "dnn_watermark",
+      "bit_accuracy": 0.603516
+    },
+    "physical/device/logitech_speaker_tests/silentcipher/LJ022-0106_logitech.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "physical/device/logitech_speaker_tests/timbre/LJ001-0072_logitech.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "physical/device/logitech_speaker_tests/wavmark/LJ004-0186_logitech.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": 0.5
+    },
+    "physical/distance/close/audioseal/LJ005-0141_close.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.625
+    },
+    "physical/distance/close/audiowmark/LJ005-0141_close.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "physical/distance/close/fvsc/LJ016-0380_close.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.475
+    },
+    "physical/distance/close/norm_space/LJ005-0141_close.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.625
+    },
+    "physical/distance/close/patchwork/LJ001-0072_close.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.45
+    },
+    "physical/distance/close/robustdnn/LJ004-0186_close.wav": {
+      "algorithm": "dnn_watermark",
+      "bit_accuracy": 0.59375
+    },
+    "physical/distance/close/silentcipher/LJ016-0380_close.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "physical/distance/close/timbre/LJ004-0186_close.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 1.0
+    },
+    "physical/distance/close/wavmark/LJ022-0106_close.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": 0.5
+    },
+    "physical/distance/far/audioseal/LJ016-0380_far.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.5
+    },
+    "physical/distance/far/audiowmark/LJ005-0141_far.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "physical/distance/far/fvsc/LJ022-0106_far.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.425
+    },
+    "physical/distance/far/norm_space/LJ005-0141_far.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.4
+    },
+    "physical/distance/far/patchwork/LJ022-0106_far.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.525
+    },
+    "physical/distance/far/robustdnn/LJ016-0380_far.wav": {
+      "algorithm": "dnn_watermark",
+      "bit_accuracy": 0.78125
+    },
+    "physical/distance/far/silentcipher/LJ005-0141_far.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "physical/distance/far/timbre/LJ016-0380_far.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.7
+    },
+    "physical/distance/far/wavmark/LJ022-0106_far.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    },
+    "physical/distance/med/audioseal/LJ022-0106_med.wav": {
+      "algorithm": "audioseal",
+      "bit_accuracy": 0.3125
+    },
+    "physical/distance/med/audiowmark/LJ016-0380_med.wav": {
+      "algorithm": "audiowmark",
+      "bit_accuracy": 0.0
+    },
+    "physical/distance/med/fvsc/LJ004-0186_med.wav": {
+      "algorithm": "fsvc",
+      "bit_accuracy": 0.55
+    },
+    "physical/distance/med/norm_space/LJ005-0141_med.wav": {
+      "algorithm": "normspace",
+      "bit_accuracy": 0.6
+    },
+    "physical/distance/med/patchwork/LJ004-0186_med.wav": {
+      "algorithm": "patchwork",
+      "bit_accuracy": 0.525
+    },
+    "physical/distance/med/robustdnn/LJ016-0380_med.wav": {
+      "algorithm": "dnn_watermark",
+      "bit_accuracy": 0.535156
+    },
+    "physical/distance/med/silentcipher/LJ022-0106_med.wav": {
+      "algorithm": "silentcipher",
+      "bit_accuracy": null
+    },
+    "physical/distance/med/timbre/LJ004-0186_med.wav": {
+      "algorithm": "timbre",
+      "bit_accuracy": 0.9
+    },
+    "physical/distance/med/wavmark/LJ016-0380_med.wav": {
+      "algorithm": "wavmark",
+      "bit_accuracy": null
+    }
+  }
+}
