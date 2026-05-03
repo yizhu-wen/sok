@@ -11,12 +11,12 @@ quality-preserving removal attacks. It combines a component-wise survey of 26
 watermarking schemes with a large-scale benchmark of 10 reproducible,
 open-source methods across speech and music.
 
-For a reviewer-friendly overview, open the project page:
+For a reviewer-friendly audio demo overview, open the project page:
 
-- [Project overview page](index.html)
+- [Audio demo project overview](https://anonymous.4open.science/w/sok-6DB0/)
 
-If you publish with GitHub Pages, use the repository root as the Pages source so
-the page can load the clipped demo audio table.
+The page is backed by `index.html` and the clipped audio files under
+`demo_audio_clips/`.
 
 ## What This Repo Contains
 
@@ -160,7 +160,11 @@ Generated outputs are intentionally not committed. See
 
 ## Demo Media
 
-The reviewer page includes:
+The reviewer audio demo page is available here:
+
+- [Audio demo project overview](https://anonymous.4open.science/w/sok-6DB0/)
+
+It includes:
 
 - an audio-first table grouped into digital-level, physical-level, and
   AI-induced distortions
