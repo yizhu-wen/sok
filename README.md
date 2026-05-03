@@ -1,4 +1,4 @@
-# Is Audio Watermarking Robust to Removal Attacks?
+# Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement Study
 
 This repository contains the experiment code and reviewer audio demo for the
 measurement study:
