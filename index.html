@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Audio Watermarking Robustness Demos</title>
-  <meta name="description" content="Reviewer demo page for audio watermarking removal attack examples.">
+  <title>Paper Overview and Demo</title>
+  <meta name="description" content="Paper overview and reviewer demo page for audio watermarking removal attack examples.">
   <style>
     :root {
       --ink: #17211f;
@@ -62,7 +62,7 @@
     }
 
     .intro {
-      max-width: 920px;
+      width: 100%;
       margin-top: 10px;
       color: var(--muted);
     }
@@ -134,8 +134,327 @@
 
     .takeaway {
       margin-top: 14px;
-      padding-top: 12px;
+      padding-top: 14px;
       border-top: 1px solid var(--line);
+    }
+
+    .takeaway-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+      gap: 12px;
+    }
+
+    .takeaway-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--wash);
+    }
+
+    .finding-card {
+      border-left: 5px solid #b4524c;
+      background: #fff6f5;
+    }
+
+    .suggestion-card {
+      border-left: 5px solid var(--accent);
+      background: #f4f9f6;
+    }
+
+    .takeaway-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .finding-card .takeaway-label {
+      color: #b4524c;
+    }
+
+    .takeaway-card > strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.08rem;
+      line-height: 1.25;
+    }
+
+    .failure-tags,
+    .suggestion-list {
+      margin-top: 12px;
+    }
+
+    .tag-heading {
+      display: block;
+      margin-top: 12px;
+      color: #7e312c;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .failure-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 7px;
+    }
+
+    .failure-tags span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 8px;
+      border: 1px solid #e0b6b2;
+      border-radius: 999px;
+      background: #fff;
+      color: #7e312c;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .suggestion-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .suggestion-list li {
+      padding: 9px 10px;
+      border: 1px solid #cfe1d8;
+      border-radius: 7px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .suggestion-list strong {
+      display: block;
+      color: var(--ink);
+    }
+
+    .paper-overview {
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .overview-lead {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.75fr) minmax(360px, 1.25fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .overview-lead h2 {
+      margin-top: 6px;
+      font-size: 1.65rem;
+    }
+
+    .overview-copy {
+      color: var(--muted);
+    }
+
+    .rq-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .rq {
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: var(--wash);
+      color: var(--muted);
+    }
+
+    .rq strong {
+      color: var(--ink);
+    }
+
+    .rq-answer {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .rq-answer strong {
+      color: var(--accent);
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    .paper-figure,
+    .figure-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .paper-figure {
+      overflow: hidden;
+    }
+
+    .paper-figure img,
+    .figure-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+
+    .paper-figure.featured img,
+    .figure-card > img {
+      padding: 10px;
+    }
+
+    figcaption {
+      padding: 10px 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .pipeline-caption {
+      text-align: center;
+    }
+
+    .figure-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .figure-card {
+      overflow: hidden;
+    }
+
+    .figure-card h3 {
+      margin: 0;
+      padding: 14px 14px 6px;
+      font-size: 1.08rem;
+      line-height: 1.25;
+    }
+
+    .figure-card p {
+      padding: 0 14px 14px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .image-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .image-pair img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .image-subbox {
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--wash);
+    }
+
+    .image-subbox img {
+      border: 0;
+    }
+
+    .image-subbox span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .chart-pair {
+      padding-top: 0;
+    }
+
+    .chart-pair img {
+      object-fit: contain;
+      background: #fff;
+      padding: 6px;
+    }
+
+    .tts-chart-row {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .quality-table-wrap {
+      margin: 0 14px 14px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .quality-table {
+      min-width: 1120px;
+      font-size: 0.82rem;
+    }
+
+    .quality-table caption {
+      padding: 10px 12px;
+      color: var(--muted);
+      text-align: left;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .quality-table th,
+    .quality-table td {
+      padding: 7px 8px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .quality-table th {
+      position: static;
+      top: auto;
+      z-index: auto;
+      background: #edf2ef;
+    }
+
+    .quality-table td {
+      font-size: 0.82rem;
+    }
+
+    .quality-good {
+      background: #dff1e7;
+      color: #1f684b;
+      font-weight: 700;
+    }
+
+    .quality-bad {
+      background: #fde5e2;
+      color: #9b3d36;
+      font-weight: 700;
     }
 
     main .wrap {
@@ -273,6 +592,46 @@
       background: #f9fbfa;
     }
 
+    .design-table-wrap {
+      margin: 0 14px 14px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .design-table {
+      min-width: 760px;
+      font-size: 0.86rem;
+    }
+
+    .design-table caption {
+      padding: 10px 12px;
+      color: var(--muted);
+      text-align: left;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .design-table th,
+    .design-table td {
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .design-table th {
+      position: static;
+      top: auto;
+      z-index: auto;
+      background: #edf2ef;
+      white-space: nowrap;
+    }
+
+    .design-table td {
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
     .group-row th {
       position: static;
       padding: 12px;
@@ -314,6 +673,16 @@
         grid-template-columns: 1fr;
       }
 
+      .overview-lead,
+      .figure-grid,
+      .takeaway-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rq-list {
+        grid-template-columns: 1fr;
+      }
+
       .filters,
       .toc-links,
       .facts {
@@ -333,7 +702,9 @@
 
       .filters,
       .toc-links,
-      .facts {
+      .facts,
+      .suggestion-list,
+      .image-pair {
         grid-template-columns: 1fr;
       }
     }
@@ -342,10 +713,12 @@
 <body>
   <header>
     <div class="wrap">
-      <h1>Audio Watermarking Removal Attack Demos</h1>
+      <h1>Paper Overview and Demo</h1>
       <p class="intro">
-        The demo table below lists one representative audio preview for each
-        distortion setting from <code>distortion_demo_audio/</code>,
+        Overview and reviewer audio demos for
+        <strong>Is Audio Watermarking Robust to Removal Attacks? A Comprehensive
+        Measurement Study</strong>. The demo table below lists one representative
+        audio preview for each distortion setting from <code>distortion_demo_audio/</code>,
         <code>physical/</code>, or <code>ai_distorted/</code>. Every playable
         preview is capped at 10 seconds.
       </p>
@@ -359,18 +732,38 @@
         <div class="facts">
           <div class="fact"><strong>26</strong><span>watermarking schemes analyzed</span></div>
           <div class="fact"><strong>10</strong><span>open-source methods reproduced</span></div>
-          <div class="fact"><strong>5</strong><span>speech and music datasets</span></div>
+          <div class="fact"><strong>5</strong><span>3 speech and 2 music datasets</span></div>
           <div class="fact"><strong>127</strong><span>attack settings in the paper evaluation</span></div>
         </div>
-        <p class="takeaway">
-          Key takeaway: no evaluated method is robust to all tested attacks.
-          Pitch shift, physical re-recording, and AI-induced voice conversion or
-          TTS are major failure modes. The paper points to frame-level message
-          repetition, broader frequency coverage, AI-distortion training, and
-          subjective listening tests as important design and evaluation lessons.
-        </p>
+        <div class="takeaway" aria-label="Highlighted key findings and suggestions">
+          <div class="takeaway-grid">
+            <div class="takeaway-card finding-card">
+              <span class="takeaway-label">Key finding</span>
+              <strong>No evaluated method is robust to all tested attacks.</strong>
+              <span class="tag-heading">Most effective attacks</span>
+              <div class="failure-tags" aria-label="Major failure modes">
+                <span>Pitch shift</span>
+                <span>Physical re-recording</span>
+                <span>Voice conversion</span>
+                <span>TTS regeneration</span>
+              </div>
+            </div>
+            <div class="takeaway-card suggestion-card">
+              <span class="takeaway-label">Suggestions</span>
+              <strong>Design and evaluation lessons for future audio watermarks.</strong>
+              <ul class="suggestion-list">
+                <li><strong>Frame-level repetition</strong>More recoverable evidence across time.</li>
+                <li><strong>Broader frequency coverage</strong>Less dependence on one fragile band.</li>
+                <li><strong>AI-distortion training</strong>Expose models to VC and TTS attacks.</li>
+                <li><strong>Subjective listening tests</strong>Measure utility beyond objective scores.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
       <nav class="quick-links" aria-label="Quick links">
+        <a href="#paper-overview">Paper overview</a>
+        <a href="#audio-table-title">Audio demos</a>
         <a href="README.md">README</a>
         <a href="demo_audio_clips/manifest.json">Audio manifest</a>
       </nav>
@@ -379,6 +772,329 @@
 
   <main>
     <div class="wrap">
+      <section class="paper-overview" id="paper-overview" aria-labelledby="paper-overview-title">
+        <div class="overview-lead">
+          <div>
+            <p class="eyebrow">Paper overview</p>
+            <h2 id="paper-overview-title">A quality-aware robustness study</h2>
+            <p class="overview-copy">
+              The paper studies whether modern audio watermarks survive
+              practical removal attacks while preserving the usefulness of the
+              audio. It connects a component-wise taxonomy of 26 schemes with a
+              benchmark of 10 reproducible methods across speech and music. We
+              answer three research questions:
+            </p>
+          </div>
+          <figure class="paper-figure featured">
+            <img src="assets/paper/system-design.png" alt="Generalized audio watermark pipeline from the paper.">
+            <figcaption class="pipeline-caption">Generalized audio watermarking pipeline</figcaption>
+          </figure>
+        </div>
+
+        <div class="rq-list" aria-label="Research questions">
+          <div class="rq">
+            <strong>RQ1.</strong> How do traditional and AI-based methods compare in robustness?
+            <span class="rq-answer"><strong>Answer:</strong> AI-based methods are more robust on average, defending against 51.63% of evaluated attack settings versus 28.97% for traditional methods.</span>
+          </div>
+          <div class="rq">
+            <strong>RQ2.</strong> What are the main robustness challenges of existing methods?
+            <span class="rq-answer"><strong>Answer:</strong> Physical and AI-induced distortions remain the main challenges, with pitch shift, time stretch, physical re-recording, VC, and TTS as major failure modes.</span>
+          </div>
+          <div class="rq">
+            <strong>RQ3.</strong> How do architectural design choices affect robustness?
+            <span class="rq-answer"><strong>Answer:</strong> Message repetition and broad frequency-range distribution improve robustness against digital and physical attacks, while AI-distortion training helps against AI-induced attacks.</span>
+          </div>
+        </div>
+
+        <div class="figure-grid">
+          <article class="figure-card">
+            <h3>Watermark structure explains robustness</h3>
+            <p>
+              The taxonomy table below summarizes design factors that relate to
+              robustness, including message repetition, frequency range, and
+              training distortions.
+            </p>
+            <div class="design-table-wrap">
+              <table class="design-table">
+                <caption>Design taxonomy of the selected methods</caption>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Model Type</th>
+                    <th>Message Repetition</th>
+                    <th>Frequency Range (Hz)</th>
+                    <th>Training Distortions</th>
+                    <th>Watermark Embedder</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>RobustDNN</td>
+                    <td>AI</td>
+                    <td>Frame level</td>
+                    <td>0-8000</td>
+                    <td>3</td>
+                    <td>Encoder network</td>
+                  </tr>
+                  <tr>
+                    <td>Timbre</td>
+                    <td>AI</td>
+                    <td>Frame level</td>
+                    <td>0-8000</td>
+                    <td>1</td>
+                    <td>Encoder network</td>
+                  </tr>
+                  <tr>
+                    <td>AudioSeal</td>
+                    <td>AI</td>
+                    <td>Frame level</td>
+                    <td>0-8000</td>
+                    <td>14</td>
+                    <td>Encoder network</td>
+                  </tr>
+                  <tr>
+                    <td>WavMark</td>
+                    <td>AI</td>
+                    <td>Block level</td>
+                    <td>0-8000</td>
+                    <td>10</td>
+                    <td>INN</td>
+                  </tr>
+                  <tr>
+                    <td>SilentCipher</td>
+                    <td>AI</td>
+                    <td>Frame level</td>
+                    <td>0-4000</td>
+                    <td>6</td>
+                    <td>Encoder network</td>
+                  </tr>
+                  <tr>
+                    <td>AWARE</td>
+                    <td>AI</td>
+                    <td>None</td>
+                    <td>0-8000</td>
+                    <td>0</td>
+                    <td>Adversarial optimization</td>
+                  </tr>
+                  <tr>
+                    <td>audiowmark</td>
+                    <td>Traditional</td>
+                    <td>Block level</td>
+                    <td>861-4307</td>
+                    <td>N/A</td>
+                    <td>FFT bin</td>
+                  </tr>
+                  <tr>
+                    <td>FSVC</td>
+                    <td>Traditional</td>
+                    <td>None</td>
+                    <td>1088-1448</td>
+                    <td>N/A</td>
+                    <td>DCT coefficient</td>
+                  </tr>
+                  <tr>
+                    <td>Patchwork</td>
+                    <td>Traditional</td>
+                    <td>Layer level</td>
+                    <td>3000-7000</td>
+                    <td>N/A</td>
+                    <td>DCT coefficient</td>
+                  </tr>
+                  <tr>
+                    <td>Norm-space</td>
+                    <td>Traditional</td>
+                    <td>None</td>
+                    <td>0-8000</td>
+                    <td>N/A</td>
+                    <td>DCT coefficient</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The spectrogram below provides a visual comparison of where watermark
+              energy appears across the selected methods.
+            </p>
+            <img src="assets/paper/watermark-spectrogram.jpg" alt="Paper spectrogram visualization of watermark-only signals across selected methods.">
+          </article>
+          <article class="figure-card">
+            <h3>Pitch shift and time stretch break watermark alignment</h3>
+            <p>
+              Pitch shift and time stretch can lower bit recovery accuracy while
+              keeping speech or music useful under selected quality thresholds.
+              In this study, the quality-preservation thresholds are ViSQOL &gt; 3.0,
+              MUSHRA-Music &gt; 79, and MUSHRA-Speech &gt; 60.
+            </p>
+            <img src="assets/paper/digital-heatmap.png" alt="Paper heatmap showing watermark bit recovery accuracy and perceptual quality under pitch-shift and time-stretch attacks.">
+          </article>
+          <article class="figure-card">
+            <h3>Physical re-recording is a major failure mode</h3>
+            <p>
+              Re-recording introduces room, distance, microphone, and speaker
+              effects. Distance causes larger accuracy drops than device changes.
+            </p>
+            <div class="image-pair chart-pair">
+              <div class="image-subbox">
+                <img src="assets/paper/physical-distance-accuracy.png" alt="Radar chart of watermark recovery accuracy under physical re-recording distance settings.">
+                <span>Distance accuracy</span>
+              </div>
+              <div class="image-subbox">
+                <img src="assets/paper/physical-device-accuracy.png" alt="Radar chart of watermark recovery accuracy under physical re-recording device settings.">
+                <span>Device accuracy</span>
+              </div>
+            </div>
+            <div class="image-pair">
+              <div class="image-subbox">
+                <img src="assets/paper/physical-default.png" alt="Paper photo of the default physical re-recording setup.">
+                <span>Distance setting</span>
+              </div>
+              <div class="image-subbox">
+                <img src="assets/paper/physical-devices.png" alt="Paper photo of the different-device physical re-recording setup.">
+                <span>Device setting</span>
+              </div>
+            </div>
+          </article>
+          <article class="figure-card">
+            <h3>AI-induced attacks change the signal source</h3>
+            <p>
+              Voice conversion and TTS regeneration can preserve perceived
+              speech utility while discarding watermark traces from the waveform.
+            </p>
+            <div class="image-pair chart-pair">
+              <div class="image-subbox">
+                <img src="assets/paper/vc-zeroshot-radar-chart.png" alt="Radar chart of watermark robustness under zero-shot voice conversion attacks.">
+                <span>Zero-shot VC</span>
+              </div>
+              <div class="image-subbox">
+                <img src="assets/paper/vc-fewshot-radar-chart.png" alt="Radar chart of watermark robustness under few-shot and adaptive voice conversion attacks.">
+                <span>Few-shot/adaptive VC</span>
+              </div>
+            </div>
+            <div class="image-pair chart-pair tts-chart-row">
+              <div class="image-subbox">
+                <img src="assets/paper/yourtts-radar-chart.png" alt="Radar chart of watermark robustness under zero-shot YourTTS attack.">
+                <span>Zero-shot TTS</span>
+              </div>
+              <div class="image-subbox">
+                <img src="assets/paper/g-lim-radar-chart.png" alt="Radar chart of watermark robustness under adaptive TTS with Griffin-Lim vocoder.">
+                <span>Adaptive TTS + G-Lim</span>
+              </div>
+              <div class="image-subbox">
+                <img src="assets/paper/h-gan-radar-chart.png" alt="Radar chart of watermark robustness under adaptive TTS with universal HiFi-GAN vocoder.">
+                <span>Adaptive TTS + universal H-GAN</span>
+              </div>
+              <div class="image-subbox">
+                <img src="assets/paper/h-gan-star-radar-chart.png" alt="Radar chart of watermark robustness under adaptive TTS with adaptive HiFi-GAN vocoder.">
+                <span>Adaptive TTS + adaptive H-GAN</span>
+              </div>
+            </div>
+            <div class="quality-table-wrap">
+              <table class="quality-table">
+                <caption>Imperceptibility metrics under AI-induced distortion. The quality-preservation thresholds are SECS &gt;= 0.8. Metric scores above the preservation threshold are marked in green, while scores below the threshold are marked in red.</caption>
+                <thead>
+                  <tr>
+                    <th rowspan="4">Metric</th>
+                    <th rowspan="4">No<br>Attack</th>
+                    <th colspan="5">Voice Conversion</th>
+                    <th colspan="7">Text-to-Speech</th>
+                  </tr>
+                  <tr>
+                    <th>AdaIn-VC</th>
+                    <th>FragmentVC</th>
+                    <th>YourTTS VC</th>
+                    <th>MediumVC</th>
+                    <th>RVC</th>
+                    <th>YourTTS</th>
+                    <th colspan="3">Tacotron2</th>
+                    <th colspan="3">FastSpeech2</th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>G-Lim</th>
+                    <th>H-GAN</th>
+                    <th>H-GAN</th>
+                    <th>G-Lim</th>
+                    <th>H-GAN</th>
+                    <th>H-GAN</th>
+                  </tr>
+                  <tr>
+                    <th>Zero-shot</th>
+                    <th>Zero-shot</th>
+                    <th>Zero-shot</th>
+                    <th>Few-shot</th>
+                    <th>Adaptive</th>
+                    <th>Zero-shot</th>
+                    <th>Adaptive</th>
+                    <th>Adaptive</th>
+                    <th>Adaptive*</th>
+                    <th>Adaptive</th>
+                    <th>Adaptive</th>
+                    <th>Adaptive*</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>ViSQOL</th>
+                    <td>4.87</td>
+                    <td class="quality-good">3.82</td>
+                    <td class="quality-good">3.02</td>
+                    <td class="quality-good">3.96</td>
+                    <td class="quality-bad">2.54</td>
+                    <td class="quality-good">4.04</td>
+                    <td class="quality-bad">2.35</td>
+                    <td class="quality-bad">1.81</td>
+                    <td class="quality-bad">2.69</td>
+                    <td class="quality-bad">2.72</td>
+                    <td class="quality-bad">1.82</td>
+                    <td class="quality-bad">2.71</td>
+                    <td class="quality-bad">2.75</td>
+                  </tr>
+                  <tr>
+                    <th>SECS</th>
+                    <td>0.99</td>
+                    <td class="quality-good">0.84</td>
+                    <td class="quality-good">0.75</td>
+                    <td class="quality-good">0.90</td>
+                    <td class="quality-bad">0.67</td>
+                    <td class="quality-good">0.93</td>
+                    <td class="quality-good">0.83</td>
+                    <td class="quality-bad">0.69</td>
+                    <td class="quality-good">0.87</td>
+                    <td class="quality-good">0.87</td>
+                    <td class="quality-bad">0.71</td>
+                    <td class="quality-good">0.89</td>
+                    <td class="quality-good">0.90</td>
+                  </tr>
+                  <tr>
+                    <th>MUSHRA-Speech</th>
+                    <td>100</td>
+                    <td class="quality-good">70</td>
+                    <td class="quality-good">64</td>
+                    <td class="quality-good">65</td>
+                    <td class="quality-good">76</td>
+                    <td class="quality-good">97</td>
+                    <td class="quality-good">78</td>
+                    <td class="quality-good">81</td>
+                    <td class="quality-good">85</td>
+                    <td class="quality-good">78</td>
+                    <td class="quality-good">79</td>
+                    <td class="quality-good">96</td>
+                    <td class="quality-good">72</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <img src="assets/paper/ai-distortion.png" alt="Paper diagram of zero-shot, few-shot, and adaptive AI-induced distortion attacks.">
+          </article>
+        </div>
+
+      </section>
+
       <section class="toc" aria-labelledby="toc-title">
         <h2 id="toc-title">Table of Contents</h2>
         <div class="toc-links">
