@@ -66,7 +66,8 @@ COPY . /app
 ENV SOK_AUDIOWMARK_BIN=/usr/local/bin/audiowmark \
     SOK_DEMO_TMPDIR=/tmp/sok_demo \
     GRADIO_SERVER_NAME=0.0.0.0 \
-    GRADIO_SERVER_PORT=7860
+    GRADIO_SERVER_PORT=7860 \
+    NO_TORCH_COMPILE=1
 
 EXPOSE 7860
 

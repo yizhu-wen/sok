@@ -27,6 +27,13 @@ Default payloads match the ones used by the scripts/13_large_*.py benchmarks.
 from __future__ import annotations
 
 import os
+
+# AudioSeal's vendored moshi modules wrap model forwards in torch.compile,
+# which torch 2.0.0 (pinned for silentcipher) rejects on Python 3.11+.
+# NO_TORCH_COMPILE is moshi's official escape hatch; it is read when the
+# audioseal modules are imported, so it must be set before any backend loads.
+os.environ.setdefault("NO_TORCH_COMPILE", "1")
+
 import re
 import shutil
 import subprocess
