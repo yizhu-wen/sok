@@ -34,7 +34,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ffmpeg libsndfile1 libfftw3-single3 libgcrypt20 libmpg123-0 \
-        libzita-resampler1 \
+        libzita-resampler1 libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=audiowmark-build /usr/local/bin/audiowmark /usr/local/bin/audiowmark
@@ -43,11 +43,17 @@ WORKDIR /app
 
 # Python dependencies first (cache-friendly).  torch is pinned to 2.0.0
 # (CPU wheels) because silentcipher requires torch<=2.0.0; audioseal and
-# wavmark are compatible with it.
+# wavmark are compatible with it.  g++ is needed only while pip builds the
+# libsvm-official sdist (a visqol-python dependency, no prebuilt wheel); it
+# is purged in the same layer, while libgomp1 (installed above) stays for
+# the compiled extension's OpenMP runtime.
 COPY demo/requirements.txt /app/demo/requirements.txt
-RUN pip install --index-url https://download.pytorch.org/whl/cpu \
+RUN apt-get update && apt-get install -y --no-install-recommends g++ \
+    && pip install --index-url https://download.pytorch.org/whl/cpu \
         torch==2.0.0 torchaudio==2.0.1 \
-    && pip install -r /app/demo/requirements.txt
+    && pip install -r /app/demo/requirements.txt \
+    && apt-get purge -y g++ \
+    && rm -rf /var/lib/apt/lists/*
 
 # Bake model checkpoints into the image (best effort — the demo lazily
 # re-downloads at runtime if a prefetch failed at build time).
