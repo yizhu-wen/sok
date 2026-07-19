@@ -1,0 +1,21 @@
+# Demo environment (single env, CPU).  torch/torchaudio are installed
+# separately from the PyTorch CPU wheel index — see the Dockerfile:
+#   pip install --index-url https://download.pytorch.org/whl/cpu torch==2.0.0 torchaudio==2.0.1
+# torch is pinned to 2.0.0 because silentcipher requires torch<=2.0.0.
+
+numpy==1.26.4
+scipy==1.11.4
+librosa==0.10.2.post1
+soundfile==0.12.1
+matplotlib==3.8.4
+
+# watermarking methods
+audioseal==0.2.0
+wavmark==0.0.3
+silentcipher==1.0.5
+
+# metrics
+visqol-python==3.4.0
+
+# UI
+gradio>=5.12,<6

@@ -18,8 +18,25 @@ For a reviewer-friendly audio demo overview, open the project page:
 The page is backed by `index.html` and the clipped audio files under
 `demo_audio_clips/`.
 
+## Interactive Demo (Docker, one command)
+
+For an evaluation-friendly, browser-based demo — upload an audio file, embed
+watermarks with any subset of 7 methods (editable payload bits with per-method
+length constraints), apply digital-level distortions, and inspect bit recovery
+rate, SI-SNR, ViSQOL, and the decoded bits per distorted clip:
+
+```bash
+./install.sh
+```
+
+The script installs Docker if needed, builds a self-contained image, and
+serves the demo at <http://localhost:7860>. See
+[`demo/README.md`](demo/README.md) for details, options, and scope.
+
 ## What This Repo Contains
 
+- `Dockerfile`, `install.sh`, `demo/`: one-command Docker + Gradio
+  interactive demo (see above)
 - `scripts/`: benchmark runners, timing scripts, reporting utilities, and
   preflight checks
 - `ai_distortions_code/`: TTS and voice-conversion distortion pipelines used for
