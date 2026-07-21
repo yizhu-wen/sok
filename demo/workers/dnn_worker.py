@@ -25,6 +25,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import _protocol  # noqa: E402
 
+_protocol.hijack_stdout()  # before any model code prints to stdout
+
 import tensorflow as tf  # noqa: E402
 
 SR = 16000

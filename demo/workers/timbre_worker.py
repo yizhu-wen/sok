@@ -32,6 +32,8 @@ import yaml  # noqa: E402
 
 import _protocol  # noqa: E402
 
+_protocol.hijack_stdout()  # before any model code prints to stdout
+
 DEVICE = torch.device("cpu")
 
 # torch>=2.6 defaults torch.load(weights_only=True); the upstream Timbre and

@@ -25,6 +25,8 @@ import librosa  # noqa: E402
 
 import _protocol  # noqa: E402
 
+_protocol.hijack_stdout()  # before any model code prints to stdout
+
 from aware.service import detect_watermark, embed_watermark  # noqa: E402
 from aware.utils.models import load  # noqa: E402
 
