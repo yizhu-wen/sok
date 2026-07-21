@@ -14,9 +14,10 @@ The script:
 
 1. installs Docker if it is missing (Linux; on macOS it points you to Docker
    Desktop),
-2. builds the demo image (all Python and system dependencies, the
-   `audiowmark` CLI compiled from source, and pre-downloaded model
-   checkpoints for AudioSeal / WavMark / SilentCipher),
+2. builds the demo image (all Python and system dependencies across three
+   isolated environments, the `audiowmark` CLI compiled from source, and
+   pre-downloaded model checkpoints for AudioSeal / WavMark / SilentCipher;
+   Timbre / RobustDNN checkpoints are vendored under `repos/`),
 3. starts the demo at **http://localhost:7860**.
 
 Options: `--port N`, `--rebuild` (clean rebuild), `--build-only`.
@@ -42,6 +43,9 @@ docker run -d -p 7860:7860 --name sok-audio-watermark-demo sok-audio-watermark-d
    | AudioSeal | AI-based | exactly 16 |
    | WavMark | AI-based | exactly 16 |
    | SilentCipher | AI-based | exactly 40 (5 bytes) |
+   | Timbre | AI-based | exactly 10 (fixed by checkpoint) |
+   | AWARE | AI-based | exactly 20 (slow: per-clip optimization) |
+   | RobustDNN | AI-based | exactly 512 (model message vector) |
    | audiowmark | Traditional (CLI) | exactly 128 (16 bytes) |
    | FSVC | Traditional | 8–64 (default 40) |
    | Patchwork | Traditional | 8–64 (default 40) |
@@ -70,13 +74,27 @@ docker run -d -p 7860:7860 --name sok-audio-watermark-demo sok-audio-watermark-d
 
 ## Scope and limitations
 
-- **Methods included:** 7 of the 10 benchmark methods. **Timbre, AWARE, and
-  DNN-WM are excluded** — they require external upstream repositories and
-  checkpoints (`repos/TimbreWatermarking`, `repos/aware`,
-  `repos/dnn-audio-watermarking`) plus mutually incompatible framework
-  stacks (TensorFlow 2.12, PyTorch 1.13), which cannot be combined into one
-  portable image. The full benchmark still uses the per-method environments
-  described in the top-level README.
+- **Methods included:** all 10 benchmark methods. Because their dependency
+  stacks are mutually incompatible, the image contains three Python
+  environments:
+  - main env (torch 2.0.0, pinned by `silentcipher`): AudioSeal, WavMark,
+    SilentCipher, audiowmark, FSVC, Patchwork, Norm-space, plus the Gradio
+    UI and metrics;
+  - `/opt/venvs/torch27` (torch 2.7, librosa 0.9.2): the **Timbre** and
+    **AWARE** workers;
+  - `/opt/venvs/tf212` (TensorFlow 2.12, numpy<1.24): the **RobustDNN**
+    worker.
+
+  Timbre/AWARE/RobustDNN run as persistent JSON-lines subprocesses
+  (`demo/workers/`), with upstream code and pretrained checkpoints vendored
+  under `repos/` (Timbre checkpoint + hifigan vocoder, RobustDNN
+  SavedModels; AWARE has no pretrained weights — it optimizes a perturbation
+  per clip).
+- **AWARE is slow on CPU**: embedding runs 400 optimization iterations per
+  clip (minutes). Set `SOK_AWARE_ITERS` to trade robustness for speed. It
+  also requires speech-like (non-silent) input and rejects silence.
+- **Payload lengths for the three worker methods are fixed** by their
+  trained models: Timbre 10 bits, AWARE 20 bits, RobustDNN 512 bits.
 - **Distortions included:** digital-level only. Background noise and
   reverberation need the external DEMAND / AIR corpora, and physical-level /
   AI-induced attacks need hardware or separate model pipelines.
@@ -85,19 +103,23 @@ docker run -d -p 7860:7860 --name sok-audio-watermark-demo sok-audio-watermark-d
   *all* distortions × *all* settings (≈ 90 settings per method) takes a
   while — the UI shows progress and caps a single run at
   `SOK_DEMO_MAX_JOBS` (default 1200) evaluations.
-- `torch` is pinned to 2.0.0 inside the image because `silentcipher`
-  requires `torch<=2.0.0`.
 
 ## Layout
 
 ```
-Dockerfile               multi-stage build (audiowmark from source + demo env)
-install.sh               one-command installer/launcher
-demo/app.py              Gradio UI
-demo/methods.py          watermark method registry (embed/decode wrappers)
-demo/eval_utils.py       distortions + metrics (reuses scripts/benchmark_utils.py)
-demo/prefetch_models.py  bakes model checkpoints into the image at build time
-demo/requirements.txt    demo Python dependencies
+Dockerfile                     multi-stage build (audiowmark from source + 3 Python envs)
+install.sh                     one-command installer/launcher
+demo/app.py                    Gradio UI
+demo/methods.py                watermark method registry (embed/decode wrappers)
+demo/eval_utils.py             distortions + metrics (reuses scripts/benchmark_utils.py)
+demo/workers/                  Timbre / AWARE / RobustDNN worker subprocesses
+demo/prefetch_models.py        bakes model checkpoints into the image at build time
+demo/requirements.txt          main env dependencies
+demo/requirements-torch27.txt  Timbre + AWARE worker env
+demo/requirements-tf212.txt    RobustDNN worker env
+repos/TimbreWatermarking/      vendored upstream code + trained checkpoint
+repos/aware/                   vendored upstream code (no pretrained weights)
+repos/dnn-audio-watermarking/  vendored upstream code + SavedModels
 ```
 
 ## Troubleshooting

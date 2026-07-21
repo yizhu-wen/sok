@@ -87,7 +87,7 @@ fi
 # ── 3. Build the image (installs all Python/system dependencies inside) ─────
 BUILD_ARGS=()
 [[ "$REBUILD" -eq 1 ]] && BUILD_ARGS+=(--no-cache)
-log "Building Docker image '$IMAGE_NAME' (first build downloads model checkpoints; this can take a while) ..."
+log "Building Docker image '$IMAGE_NAME' (first build compiles audiowmark, installs 3 Python environments, and downloads model checkpoints — expect 20-40 minutes) ..."
 $DOCKER build "${BUILD_ARGS[@]+"${BUILD_ARGS[@]}"}" -t "$IMAGE_NAME" "$SCRIPT_DIR"
 log "Image built."
 

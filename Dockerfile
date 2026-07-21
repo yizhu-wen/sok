@@ -55,6 +55,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends g++ \
     && apt-get purge -y g++ \
     && rm -rf /var/lib/apt/lists/*
 
+# Isolated environments for the methods whose dependencies are incompatible
+# with the main env (see requirements/README.md):
+#   /opt/venvs/torch27 — Timbre + AWARE workers (torch 2.7, librosa 0.9.2)
+#   /opt/venvs/tf212   — RobustDNN worker (TensorFlow 2.12, numpy<1.24)
+# g++ is transient again: webrtcvad (AWARE) compiles a C extension.
+COPY demo/requirements-torch27.txt demo/requirements-tf212.txt /app/demo/
+RUN apt-get update && apt-get install -y --no-install-recommends g++ \
+    && python -m venv /opt/venvs/torch27 \
+    && /opt/venvs/torch27/bin/pip install --no-cache-dir \
+        --index-url https://download.pytorch.org/whl/cpu \
+        torch==2.7.0 torchaudio==2.7.0 \
+    && /opt/venvs/torch27/bin/pip install --no-cache-dir \
+        -r /app/demo/requirements-torch27.txt \
+    && python -m venv /opt/venvs/tf212 \
+    && /opt/venvs/tf212/bin/pip install --no-cache-dir \
+        -r /app/demo/requirements-tf212.txt \
+    && apt-get purge -y g++ \
+    && rm -rf /var/lib/apt/lists/*
+
 # Bake model checkpoints into the image (best effort — the demo lazily
 # re-downloads at runtime if a prefetch failed at build time).
 COPY demo/prefetch_models.py /app/demo/prefetch_models.py
@@ -64,6 +83,9 @@ RUN python /app/demo/prefetch_models.py
 COPY . /app
 
 ENV SOK_AUDIOWMARK_BIN=/usr/local/bin/audiowmark \
+    SOK_TIMBRE_PYTHON=/opt/venvs/torch27/bin/python \
+    SOK_AWARE_PYTHON=/opt/venvs/torch27/bin/python \
+    SOK_DNN_PYTHON=/opt/venvs/tf212/bin/python \
     SOK_DEMO_TMPDIR=/tmp/sok_demo \
     GRADIO_SERVER_NAME=0.0.0.0 \
     GRADIO_SERVER_PORT=7860 \

@@ -305,9 +305,10 @@ def build_app() -> gr.Blocks:
             "embed watermarks with one or more methods, then apply "
             "digital-level distortions and inspect **bit recovery rate**, "
             "**SI-SNR**, **ViSQOL**, and the **decoded payload bits**.\n\n"
-            "*Timbre, AWARE, and DNN-WM from the paper are excluded here: "
-            "they need external repositories, checkpoints, and incompatible "
-            "framework versions — see `demo/README.md`.*"
+            "*All 10 benchmark methods are included. Timbre, AWARE, and "
+            "RobustDNN run in isolated worker environments (their "
+            "dependencies conflict with the main stack). Note: AWARE embeds "
+            "by per-clip optimization and takes minutes on CPU.*"
             + ("\n\n⚠️ Currently unavailable in this container: "
                + ", ".join(f"{m.name} ({m.unavailable_reason})"
                            for m in unavailable) if unavailable else ""))

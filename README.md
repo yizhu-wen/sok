@@ -21,9 +21,10 @@ The page is backed by `index.html` and the clipped audio files under
 ## Interactive Demo (Docker, one command)
 
 For an evaluation-friendly, browser-based demo — upload an audio file, embed
-watermarks with any subset of 7 methods (editable payload bits with per-method
-length constraints), apply digital-level distortions, and inspect bit recovery
-rate, SI-SNR, ViSQOL, and the decoded bits per distorted clip:
+watermarks with any subset of all 10 benchmark methods (editable payload bits
+with per-method length constraints), apply digital-level distortions, and
+inspect bit recovery rate, SI-SNR, ViSQOL, and the decoded bits per distorted
+clip:
 
 ```bash
 ./install.sh
