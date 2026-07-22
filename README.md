@@ -6,30 +6,9 @@ measurement study:
 > **Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement
 > Study**
 
-The project evaluates whether current audio watermarking systems survive
-quality-preserving removal attacks. It combines a component-wise survey of 26
-watermarking schemes with a large-scale benchmark of 10 reproducible,
-open-source methods across speech and music.
-
-For a reviewer-friendly audio demo overview, open the
+For a audio demo overview, open the
 [project page](https://anonymous.4open.science/w/sok-6DB0/) (see
 [Demo Media](#demo-media) below).
-
-## Interactive Demo (Docker, one command)
-
-For an evaluation-friendly, browser-based demo — upload an audio file, embed
-watermarks with any subset of all 10 benchmark methods (editable payload bits
-with per-method length constraints), apply digital-level distortions, and
-inspect bit recovery rate, SI-SNR, ViSQOL, and the decoded bits per distorted
-clip:
-
-```bash
-./install.sh
-```
-
-The script installs Docker if needed, builds a self-contained image, and
-serves the demo at <http://localhost:7860>. See
-[`demo/README.md`](demo/README.md) for details, options, and scope.
 
 ## Paper Snapshot
 
@@ -59,6 +38,24 @@ The paper evaluation covers:
 The main takeaway is that no evaluated method is robust to every tested
 quality-preserving removal attack. Pitch shift, physical re-recording, and
 AI-induced voice conversion or TTS are the major failure modes.
+
+
+## Interactive Demo (Docker, one command)
+
+For an evaluation-friendly, browser-based demo — upload an audio file, embed
+watermarks with any subset of all 10 benchmark methods (editable payload bits
+with per-method length constraints), apply digital-level distortions, and
+inspect bit recovery rate, SI-SNR, ViSQOL, and the decoded bits per distorted
+clip:
+
+```bash
+./install.sh
+```
+
+The script installs Docker if needed, builds a self-contained image, and
+serves the demo. See
+[`demo/README.md`](demo/README.md) for details, options, and scope.
+
 
 ## Setup
 
@@ -124,56 +121,3 @@ envs/kosta/bin/python scripts/13_large_kosta.py
 The shared benchmark utility supports checkpoint resume. If a run is interrupted,
 rerun the same command and completed files will be skipped.
 
-## Timing Experiments
-
-Timing scripts are under `scripts/14_timing_*.py`. They measure method-level
-embed/decode cost and write results under `results/timing/`.
-
-```bash
-envs/audioseal/bin/python scripts/14_timing_audioseal.py
-envs/wavmark/bin/python scripts/14_timing_wavmark.py
-python scripts/14_timing_report.py
-```
-
-## Reporting
-
-Build a dataset workbook from completed benchmark JSON files:
-
-```bash
-python3 scripts/18_dataset_full_excel.py \
-  --dataset speech_ljspeech \
-  --out results/speech_ljspeech_full.xlsx \
-  --suffixes __plain__
-```
-
-Generated outputs are intentionally not committed. See
-[`results/README.md`](results/README.md) for the expected output structure.
-
-## Demo Media
-
-The reviewer audio demo page is available here:
-
-- [Audio demo project overview](https://anonymous.4open.science/w/sok-6DB0/)
-
-It includes:
-
-- an audio-first table grouped into digital-level, physical-level, and
-  AI-induced distortions
-- 702 MP3 previews under `demo_audio_clips/`, each capped at 10 seconds
-- one representative clip per setting-level distortion condition
-- a manifest under `demo_audio_clips/manifest.json` used by `index.html`
-
-Rebuild the clipped audio previews and manifest with:
-
-```bash
-python3 scripts/build_reviewer_audio_demo.py
-```
-
-## Reproducibility Notes
-
-- Keep full benchmark results separate from reduced-sample validation runs.
-- Use reduced sample counts only for bring-up or debugging, and label those
-  outputs separately from full benchmark results.
-- Do not commit local datasets, model checkpoints, logs, or generated outputs.
-- If upstream method APIs change, prefer updating the corresponding wrapper
-  script instead of changing shared benchmark semantics.
