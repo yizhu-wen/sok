@@ -11,12 +11,9 @@ quality-preserving removal attacks. It combines a component-wise survey of 26
 watermarking schemes with a large-scale benchmark of 10 reproducible,
 open-source methods across speech and music.
 
-For a reviewer-friendly audio demo overview, open the project page:
-
-- [Audio demo project overview](https://anonymous.4open.science/w/sok-6DB0/)
-
-The page is backed by `index.html` and the clipped audio files under
-`demo_audio_clips/`.
+For a reviewer-friendly audio demo overview, open the
+[project page](https://anonymous.4open.science/w/sok-6DB0/) (see
+[Demo Media](#demo-media) below).
 
 ## Interactive Demo (Docker, one command)
 
@@ -33,25 +30,6 @@ clip:
 The script installs Docker if needed, builds a self-contained image, and
 serves the demo at <http://localhost:7860>. See
 [`demo/README.md`](demo/README.md) for details, options, and scope.
-
-## What This Repo Contains
-
-- `Dockerfile`, `install.sh`, `demo/`: one-command Docker + Gradio
-  interactive demo (see above)
-- `scripts/`: benchmark runners, timing scripts, reporting utilities, and
-  preflight checks
-- `ai_distortions_code/`: TTS and voice-conversion distortion pipelines used for
-  AI-induced removal attacks
-- `demo_audio_clips/`: 10-second-or-shorter reviewer previews generated from
-  the demo audio
-- `requirements/`: per-method dependency manifests
-- `repos/README.md`: expected layout for third-party method repositories
-- top-level `*_watermarking_gpu.py` files: classic watermarking baselines used
-  by the Kosta-method wrappers
-- `index.html`: static GitHub Pages overview for reviewers
-
-The public package intentionally excludes generated benchmark outputs, local
-virtual environments, private logs, and machine-specific paths.
 
 ## Paper Snapshot
 
@@ -105,8 +83,8 @@ Install system tools separately:
 - `audiowmark`, exposed through `SOK_AUDIOWMARK_BIN`
 - CUDA libraries required by the specific GPU environments
 
-Several methods also require external upstream repositories or checkpoints. See
-[`repos/README.md`](repos/README.md) for the expected repository layout.
+The upstream code and pretrained checkpoints for Timbre, AWARE, and RobustDNN
+are vendored under [`repos/`](repos/README.md); no external cloning is needed.
 
 ## Configuration
 
