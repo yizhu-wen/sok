@@ -72,14 +72,19 @@ _SECS_PYTHON          = os.environ.get(
 _SECS_SCRIPT          = Path(__file__).with_name("resemblyzer_secs_server.py")
 
 # (dataset_key, category_folder, dataset_folder)
+# The five paper datasets. Build the tree with scripts/16_sample_dataset.py;
+# datasets whose folder is absent are skipped with a warning, so a partial
+# download still runs.
 DATASETS = [
-    ("speech_daps",       "speech", "daps"),
-    ("speech_gigaspeech", "speech", "gigaspeech"),
-    ("speech_ljspeech",   "speech", "LJSpeech-1.1"),
-    ("music_m4singer",    "music",  "m4singer"),
-    ("music_moisesdb",    "music",  "moisesdb"),
-    ("event_clotho",      "event",  "Clotho"),
-    ("event_esc50",       "event",  "ESC-50-master"),
+    ("speech_daps",        "speech", "daps"),
+    ("speech_librispeech", "speech", "LibriSpeech"),
+    ("speech_ljspeech",    "speech", "LJSpeech-1.1"),
+    ("music_m4singer",     "music",  "m4singer"),
+    ("music_moisesdb",     "music",  "moisesdb"),
+    # Extended (non-paper) sets from earlier exploration; re-enable if present:
+    # ("speech_gigaspeech", "speech", "gigaspeech"),
+    # ("event_clotho",      "event",  "Clotho"),
+    # ("event_esc50",       "event",  "ESC-50-master"),
 ]
 
 
@@ -328,7 +333,13 @@ def run_dataset_benchmark(dataset_key, category, folder, algo,
                   flush=True)
             return
 
-    all_files   = sample_files(category, folder, n=n_samples)
+    try:
+        all_files = sample_files(category, folder, n=n_samples)
+    except FileNotFoundError:
+        print(f"\n  [SKIP] {algo}  {dataset_key} — dataset folder not found "
+              f"({DATASET_DIR / category / folder}); "
+              f"build it with scripts/16_sample_dataset.py", flush=True)
+        return
     visqol_mode = "speech" if dataset_key.startswith("speech") else "audio"
 
     # Build flat distortion list once (needed by checkpoint helpers too)
