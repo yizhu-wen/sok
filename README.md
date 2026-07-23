@@ -54,13 +54,13 @@ serves the demo with Gradio. See [`demo/README.md`](demo/README.md) for details,
 
 ## Datasets
 
-The benchmark uses five public speech/music datasets, sampled as in the paper
-(fixed seed 42):
+The benchmark uses five public speech/music datasets, randomly sampled with a
+fixed seed (42):
 
 | Dataset | Domain | Clips used | Source |
 | --- | --- | --- | --- |
 | LJSpeech | speech | 2,000 sampled of 13,100 | <https://keithito.com/LJ-Speech-Dataset/> |
-| LibriSpeech | speech | 200 sampled | <https://www.openslr.org/12> |
+| LibriSpeech | speech | 2,000 sampled | <https://www.openslr.org/12> |
 | DAPS | speech | full dataset | <https://zenodo.org/records/4660670> |
 | M4Singer | music (singing) | 2,000 sampled | <https://github.com/M4Singer/M4Singer> |
 | MoisesDB | music (multitrack) | 2,000 sampled | <https://github.com/moises-ai/moises-db> |
