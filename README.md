@@ -84,19 +84,3 @@ distorted clip, and measures bit accuracy plus SI-SNR, PESQ, ESTOI, ViSQOL, and
 SECS against the clean original. The physical re-recording and AI-induced
 attacks (under `ai_distortions_code/`) that complete the 127 settings need
 hardware or separate model pipelines and are not part of this script.
-
-Prerequisites: per-method virtualenvs under `envs/` (one per
-`requirements/*.txt`), a CUDA GPU for the AI-based methods, `ffmpeg`, and
-`SOK_AUDIOWMARK_BIN`. The script runs a preflight check and skips methods whose
-environment is missing.
-
-Results go to `results/benchmark/{dataset_key}/{algorithm}.json` with logs under
-`results/logs/`; re-running skips completed work. Build per-dataset workbooks
-with:
-
-```bash
-python3 scripts/18_dataset_full_excel.py \
-  --dataset speech_ljspeech \
-  --out results/speech_ljspeech_full.xlsx \
-  --suffixes __plain__
-```
