@@ -1,7 +1,7 @@
 # Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement Study
 
-This repository contains the experiment code and reviewer audio demo for the
-measurement study:
+This repository contains the experiment code and audio demo for the measurement
+study:
 
 > **Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement
 > Study**
@@ -26,47 +26,48 @@ The benchmark reproduces 10 audio watermarking methods:
 | Patchwork | Traditional | `scripts/13_large_kosta.py` |
 | Norm-space | Traditional | `scripts/13_large_kosta.py` |
 
-The paper evaluation covers:
+The evaluation covers 5 speech/music datasets, 3 attack families
+(digital-level, physical-level, AI-induced), and 127 attack settings. No
+evaluated method is robust to every tested quality-preserving removal attack;
+pitch shift, physical re-recording, and AI-induced voice conversion or TTS are
+the major failure modes.
 
-- 5 speech/music datasets: LJSpeech, LibriSpeech, DAPS, M4Singer, and MoisesDB
-- 3 attack families: digital-level, physical-level, and AI-induced distortions
-- 127 attack settings in the current evaluation section
+## Interactive Watermarking Demo (Docker + Gradio)
 
-The main takeaway is that no evaluated method is robust to every tested
-quality-preserving removal attack. Pitch shift, physical re-recording, and
-AI-induced voice conversion or TTS are the major failure modes.
+An evaluation-friendly, one-command package of the benchmark: upload a single
+audio file, embed watermarks with one or more methods, apply digital-level
+distortions, and inspect robustness metrics — all from a browser UI.
 
-
-## Interactive Demo Setup
-
-Browser-based audio watermark demo for evaluation: upload an audio file, 
-embed watermarks using the 10 benchmark methods, apply digital-level 
-distortions, and review bit recovery rate and ViSQOL for each distorted clip.
-
-### Running
-
-Run the following script to install Docker if needed and builds a self-contained image, and
-serves the demo with Gradio. See [`demo/README.md`](demo/README.md) for details, options, and scope.
+### Quick start
 
 ```bash
 ./install.sh
 ```
 
+The script:
+
+1. installs Docker if it is missing (Linux; on macOS it points you to Docker
+   Desktop),
+2. builds the demo image (all Python and system dependencies across three
+   isolated environments, the `audiowmark` CLI compiled from source, and
+   pre-downloaded model checkpoints for AudioSeal / WavMark / SilentCipher;
+   Timbre / RobustDNN checkpoints are vendored under `repos/`),
+3. starts the demo at <http://localhost:7860>.
+
 ## Datasets
 
-The benchmark uses five public speech/music datasets, randomly sampled with a
-fixed seed (42):
+Five public speech/music datasets, randomly sampled with a fixed seed (42):
 
 | Dataset | Domain | Clips used | Source |
 | --- | --- | --- | --- |
-| LJSpeech | speech | 2,000 sampled of 13,100 | <https://keithito.com/LJ-Speech-Dataset/> |
+| LJSpeech | speech | 2,000 of 13,100 | <https://keithito.com/LJ-Speech-Dataset/> |
 | LibriSpeech | speech | 2,000 sampled | <https://www.openslr.org/12> |
-| DAPS | speech | full dataset | <https://zenodo.org/records/4660670> |
+| DAPS | speech | full dataset (1,500) | <https://zenodo.org/records/4660670> |
 | M4Singer | music (singing) | 2,000 sampled | <https://github.com/M4Singer/M4Singer> |
 | MoisesDB | music (multitrack) | 2,000 sampled | <https://github.com/moises-ai/moises-db> |
 
-Download the originals from the sources above, then reproduce the paper's
-sampling into the directory layout the benchmark expects:
+Download the originals, then reproduce the sampling into the layout the
+benchmark expects:
 
 ```bash
 python3 scripts/16_sample_dataset.py \
@@ -81,52 +82,47 @@ python3 scripts/16_sample_dataset.py \
 export SOK_DATASET_DIR=/data/sok_dataset
 ```
 
-Any subset of `--raw` entries works — missing datasets are simply skipped by
-the benchmark. The script writes `sample_manifest.json` recording the exact
-files selected, and `--zip` produces a single archive of the sampled tree.
+Any subset of `--raw` entries works — missing datasets are skipped by the
+benchmark. The script writes `sample_manifest.json` recording the exact files
+selected.
 
 Pre-sampled bundle: **[Google Drive link — TODO: upload
-`sok_dataset_sample.zip` and paste the share link here]**. Note that LJSpeech
-(public domain), LibriSpeech (CC BY 4.0), and DAPS are redistributable;
-M4Singer and MoisesDB have research-use licenses — check them before sharing
-those two publicly, or share the manifest instead.
+`sok_dataset_sample.zip` and paste the share link here]**. LJSpeech, LibriSpeech,
+and DAPS are redistributable; M4Singer and MoisesDB have research-use licenses
+— check them before sharing publicly.
 
-The background-noise and reverberation distortions additionally need the
-[DEMAND](https://zenodo.org/records/1227121) noise corpus (`SOK_NOISE_DIR`)
-and the [Aachen Impulse Response](https://www.iks.rwth-aachen.de/en/research/tools-downloads/databases/aachen-impulse-response-database/)
+Background-noise and reverberation distortions additionally need the
+[DEMAND](https://zenodo.org/records/1227121) noise corpus (`SOK_NOISE_DIR`) and
+the [Aachen Impulse Response](https://www.iks.rwth-aachen.de/en/research/tools-downloads/databases/aachen-impulse-response-database/)
 database (`SOK_RIR_DIR`).
 
 ## Running Benchmark
 
-One command runs the complete robustness benchmark — all 10 watermarking
-methods × all automated attack settings × every dataset present under
-`SOK_DATASET_DIR`:
+One command runs all 10 methods × all automated attack settings × every dataset
+present under `SOK_DATASET_DIR`:
 
 ```bash
-./run_benchmarks.sh                        # everything
-./run_benchmarks.sh --methods audioseal,kosta   # a subset
+./run_benchmarks.sh                              # everything
+./run_benchmarks.sh --methods audioseal,kosta    # a subset
 ```
 
-For each method and dataset, the runner embeds the watermark into every clip,
-applies the full distortion suite to the watermarked audio — 116 automated
-attack settings across 12 distortion types (pitch shift, time stretch,
-Gaussian noise, bitcrush, MP3, background noise, cutting, high/low-pass,
-sample suppression, resampling, reverberation) — decodes the watermark from
-each distorted clip, and measures bit accuracy plus SI-SNR, PESQ, ESTOI,
-ViSQOL, and SECS against the clean original. The physical re-recording and
-AI-induced attacks (TTS / voice conversion, under `ai_distortions_code/`)
-that complete the paper's 127 settings require hardware or separate model
-pipelines and are not part of this script.
+For each method and dataset, the runner embeds the watermark, applies 116
+automated attack settings across 12 distortion types (pitch shift, time stretch,
+Gaussian noise, bitcrush, MP3, background noise, cutting, high/low-pass, sample
+suppression, resampling, reverberation), decodes the watermark from each
+distorted clip, and measures bit accuracy plus SI-SNR, PESQ, ESTOI, ViSQOL, and
+SECS against the clean original. The physical re-recording and AI-induced
+attacks (under `ai_distortions_code/`) that complete the 127 settings need
+hardware or separate model pipelines and are not part of this script.
 
-Prerequisites: the per-method virtualenvs under `envs/` (one per
-`requirements/*.txt`; the methods' dependency stacks are mutually
-incompatible), a CUDA GPU for the AI-based methods, `ffmpeg`, and
-`SOK_AUDIOWMARK_BIN` pointing at an `audiowmark` binary. The script runs a
-preflight check first and skips methods whose environment is missing.
+Prerequisites: per-method virtualenvs under `envs/` (one per
+`requirements/*.txt`), a CUDA GPU for the AI-based methods, `ffmpeg`, and
+`SOK_AUDIOWMARK_BIN`. The script runs a preflight check and skips methods whose
+environment is missing.
 
-Results are written to `results/benchmark/{dataset_key}/{algorithm}.json`
-with logs under `results/logs/`. Runs are resume-safe: re-running the script
-skips completed work. Build per-dataset Excel workbooks afterwards with:
+Results go to `results/benchmark/{dataset_key}/{algorithm}.json` with logs under
+`results/logs/`; re-running skips completed work. Build per-dataset workbooks
+with:
 
 ```bash
 python3 scripts/18_dataset_full_excel.py \

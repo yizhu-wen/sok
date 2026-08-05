@@ -1,8 +1,7 @@
 """
 Watermark method registry for the interactive Gradio demo.
 
-Wraps the subset of benchmark methods that can run inside a single Docker
-environment (single Python + CPU PyTorch):
+Methods running in this process (single Python + CPU PyTorch):
 
   - AudioSeal      (pip `audioseal`,     16-bit payload, fixed)
   - WavMark        (pip `wavmark`,       16-bit payload, fixed)
@@ -12,10 +11,12 @@ environment (single Python + CPU PyTorch):
   - Patchwork      (in-repo,             variable payload, default 40 bits)
   - Norm-space     (in-repo,             variable payload, default 40 bits)
 
-Timbre, AWARE and DNN-WM from the paper are NOT included: they require
-external upstream repositories, private checkpoints, and incompatible
-framework versions (TensorFlow 2.12 / old PyTorch), so they cannot be
-packaged into one portable image.  See demo/README.md.
+Methods whose dependencies conflict with this environment run in their own
+virtualenvs as persistent subprocesses (see demo/workers/):
+
+  - Timbre         (torch 2.7 venv,      10-bit payload, fixed)
+  - AWARE          (torch 2.7 venv,      20-bit payload, fixed; slow embed)
+  - RobustDNN      (TensorFlow 2.12 venv, 512-bit payload, fixed)
 
 Each method exposes:
   embed(y, sr, bits)      -> (watermarked float32 array, sample_rate)
