@@ -66,36 +66,6 @@ Five public speech/music datasets, randomly sampled with a fixed seed (42):
 | M4Singer | music (singing) | 2,000 sampled | <https://github.com/M4Singer/M4Singer> |
 | MoisesDB | music (multitrack) | 2,000 sampled | <https://github.com/moises-ai/moises-db> |
 
-Download the originals, then reproduce the sampling into the layout the
-benchmark expects:
-
-```bash
-python3 scripts/16_sample_dataset.py \
-  --raw ljspeech=/data/LJSpeech-1.1 \
-  --raw librispeech=/data/LibriSpeech/test-clean \
-  --raw daps=/data/daps \
-  --raw m4singer=/data/m4singer \
-  --raw moisesdb=/data/moisesdb \
-  --out /data/sok_dataset \
-  --zip sok_dataset_sample.zip          # optional shareable bundle
-
-export SOK_DATASET_DIR=/data/sok_dataset
-```
-
-Any subset of `--raw` entries works — missing datasets are skipped by the
-benchmark. The script writes `sample_manifest.json` recording the exact files
-selected.
-
-Pre-sampled bundle: **[Google Drive link — TODO: upload
-`sok_dataset_sample.zip` and paste the share link here]**. LJSpeech, LibriSpeech,
-and DAPS are redistributable; M4Singer and MoisesDB have research-use licenses
-— check them before sharing publicly.
-
-Background-noise and reverberation distortions additionally need the
-[DEMAND](https://zenodo.org/records/1227121) noise corpus (`SOK_NOISE_DIR`) and
-the [Aachen Impulse Response](https://www.iks.rwth-aachen.de/en/research/tools-downloads/databases/aachen-impulse-response-database/)
-database (`SOK_RIR_DIR`).
-
 ## Running Benchmark
 
 One command runs all 10 methods × all automated attack settings × every dataset
