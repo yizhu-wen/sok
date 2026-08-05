@@ -120,6 +120,13 @@ def do_embed(audio_path, selected_names, visqol_mode, *bit_texts,
     state = {"orig_y": y, "orig_sr": sr, "stem": stem,
              "visqol_mode": visqol_mode, "session_dir": str(session_dir),
              "wm": {}, "play_map": {}}
+    # Rendered once here so the comparison view can show it without recomputing.
+    try:
+        state["orig_spec"] = eu.spectrogram_png(
+            y, sr, f"Original — uploaded audio ({sr} Hz)",
+            str(session_dir / "original.png"))
+    except Exception:
+        state["orig_spec"] = None
 
     per_method_updates = []
     ok, failed = [], []
@@ -170,7 +177,7 @@ def do_embed(audio_path, selected_names, visqol_mode, *bit_texts,
                                    gr.update(value=wav_path),
                                    gr.update(value=png_path)]
             state["wm"][m.key] = {"name": m.name, "bits": bits,
-                                  "y": y_wm, "sr": sr_wm}
+                                  "y": y_wm, "sr": sr_wm, "spec": png_path}
             ok.append(m.name)
         except Exception as e:
             traceback.print_exc()
@@ -258,7 +265,7 @@ def do_evaluate(state, selected_dist_labels, *setting_lists,
             wav_path = _write_wav(
                 session_dir / f"{mkey}__{dkey}__{slug}.wav", y_d, sr_wm)
             play_key = f"{info['name']} | {label} = {setting}"
-            play_map[play_key] = wav_path
+            play_map[play_key] = {"wav": wav_path, "mkey": mkey}
 
             rows.append([info["name"], label, str(setting), _fmt(rec),
                          _fmt(si, 2), _fmt(visqol), _decoded_str(decoded)])
@@ -279,18 +286,40 @@ def do_evaluate(state, selected_dist_labels, *setting_lists,
 
 
 def do_play(state, play_key):
+    """Return the distorted clip plus the three-way spectrogram comparison:
+    original upload → watermarked → distorted watermarked."""
+    empty = (None, None, None, None)
     if not state or not play_key:
-        return None, None
-    wav_path = state.get("play_map", {}).get(play_key)
-    if not wav_path or not Path(wav_path).exists():
-        return None, None
-    png_path = wav_path + ".png"
-    if not Path(png_path).exists():
-        y, sr = sf.read(wav_path)
-        if y.ndim > 1:
-            y = y.mean(axis=1)
-        eu.spectrogram_png(y.astype(np.float32), sr, play_key, png_path)
-    return wav_path, png_path
+        return empty
+    entry = state.get("play_map", {}).get(play_key)
+    if not entry:
+        return empty
+    wav_path = entry["wav"]
+    if not Path(wav_path).exists():
+        return empty
+
+    # Distorted spectrogram — rendered on demand, then cached next to the wav.
+    dist_png = wav_path + ".png"
+    if not Path(dist_png).exists():
+        try:
+            y, sr = sf.read(wav_path)
+            if y.ndim > 1:
+                y = y.mean(axis=1)
+            eu.spectrogram_png(y.astype(np.float32), sr,
+                               f"Distorted — {play_key}", dist_png)
+        except Exception:
+            traceback.print_exc()
+            dist_png = None
+
+    info = state.get("wm", {}).get(entry.get("mkey"), {})
+    wm_png = info.get("spec")
+    if wm_png and not Path(wm_png).exists():
+        wm_png = None
+    orig_png = state.get("orig_spec")
+    if orig_png and not Path(orig_png).exists():
+        orig_png = None
+
+    return wav_path, orig_png, wm_png, dist_png
 
 
 # ─── UI ───────────────────────────────────────────────────────────────────────
@@ -389,13 +418,21 @@ def build_app() -> gr.Blocks:
             datatype=["str"] * 7, interactive=False, wrap=True,
             label="Per-clip results (distorted watermarked audio vs. clean original)")
 
-        gr.Markdown("### Listen to a distorted watermarked clip")
+        gr.Markdown(
+            "### Listen & compare spectrograms\n"
+            "Pick an evaluated clip to hear it and compare the three stages "
+            "side by side: the uploaded original, the watermarked audio, and "
+            "the distorted watermarked audio.")
         play_dd = gr.Dropdown(choices=[], label="Method | distortion = setting")
+        play_audio = gr.Audio(label="Distorted watermarked audio",
+                              type="filepath", interactive=False)
         with gr.Row():
-            play_audio = gr.Audio(label="Distorted watermarked audio",
-                                  type="filepath", interactive=False)
-            play_img = gr.Image(label="Spectrogram", type="filepath",
-                                interactive=False)
+            spec_orig = gr.Image(label="1. Original (uploaded)",
+                                 type="filepath", interactive=False)
+            spec_wm = gr.Image(label="2. Watermarked",
+                               type="filepath", interactive=False)
+            spec_dist = gr.Image(label="3. Distorted watermarked",
+                                 type="filepath", interactive=False)
 
         # ── wiring ──
         all_methods_btn.click(lambda: gr.update(value=METHOD_NAMES),
@@ -417,10 +454,13 @@ def build_app() -> gr.Blocks:
         eval_btn.click(
             do_evaluate,
             inputs=[session, dist_sel] + setting_groups,
-            outputs=[eval_status, results_df, play_dd, session])
+            outputs=[eval_status, results_df, play_dd, session],
+        ).then(  # populate the comparison view for the first clip right away
+            do_play, inputs=[session, play_dd],
+            outputs=[play_audio, spec_orig, spec_wm, spec_dist])
 
         play_dd.change(do_play, inputs=[session, play_dd],
-                       outputs=[play_audio, play_img])
+                       outputs=[play_audio, spec_orig, spec_wm, spec_dist])
     return demo
 
 
