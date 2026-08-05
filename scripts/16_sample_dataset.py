@@ -4,7 +4,7 @@ Reproduce the paper's dataset sampling and build the benchmark dataset tree.
 Sampling counts:
   - LJSpeech    : randomly sample 2,000 of the 13,100 clips
   - LibriSpeech : randomly sample 2,000 clips
-  - DAPS        : use the full dataset
+  - DAPS        : randomly sample 100 clips
   - M4Singer    : randomly sample 2,000 clips
   - MoisesDB    : randomly select 2,000 clips
 
@@ -53,7 +53,7 @@ import numpy as np
 DATASETS = {
     "ljspeech":    ("speech/LJSpeech-1.1", 2000, (".wav",)),
     "librispeech": ("speech/LibriSpeech",  2000, (".flac", ".wav")),
-    "daps":        ("speech/daps",         None, (".wav",)),
+    "daps":        ("speech/daps",         100,  (".wav",)),
     "m4singer":    ("music/m4singer",      2000, (".wav",)),
     "moisesdb":    ("music/moisesdb",      2000, (".wav",)),
 }

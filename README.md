@@ -64,7 +64,7 @@ Five public speech/music datasets, randomly sampled with a fixed seed (42):
 | --- | --- | --- | --- |
 | LJSpeech | speech | 2,000 of 13,100 | <https://keithito.com/LJ-Speech-Dataset/> |
 | LibriSpeech | speech | 2,000 sampled | <https://www.openslr.org/12> |
-| DAPS | speech | full dataset (1,500) | <https://zenodo.org/records/4660670> |
+| DAPS | speech | 100 sampled | <https://zenodo.org/records/4660670> |
 | M4Singer | music (singing) | 2,000 sampled | <https://github.com/M4Singer/M4Singer> |
 | MoisesDB | music (multitrack) | 2,000 sampled | <https://github.com/moises-ai/moises-db> |
 
