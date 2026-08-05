@@ -6,9 +6,6 @@ study:
 > **Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement
 > Study**
 
-For an audio demo overview, open the
-[project page](https://anonymous.4open.science/w/sok-6DB0/).
-
 ## Paper Snapshot
 
 The benchmark reproduces 10 audio watermarking methods:
