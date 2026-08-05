@@ -41,7 +41,17 @@ TMP_ROOT.mkdir(parents=True, exist_ok=True)
 REGISTRY = wm.REGISTRY
 METHOD_NAMES = [m.name for m in REGISTRY]
 AVAILABLE_NAMES = [m.name for m in REGISTRY if m.unavailable_reason is None]
-DIST_LABELS = [eu.DISTORTION_LABELS[k] for k in eu.DIGITAL_DISTORTIONS]
+
+DIST_KEYS = list(eu.DIGITAL_DISTORTIONS)
+# Checkbox labels carry the number of attack settings each type contributes,
+# e.g. "Pitch shift (cents) · 10 settings".  CHOICE_TO_KEY maps back.
+DIST_CHOICE_LABELS = {
+    k: f"{eu.DISTORTION_LABELS[k]} · {len(v)} settings"
+    for k, v in eu.DIGITAL_DISTORTIONS.items()
+}
+CHOICE_TO_KEY = {v: k for k, v in DIST_CHOICE_LABELS.items()}
+DIST_LABELS = list(DIST_CHOICE_LABELS.values())
+TOTAL_SETTINGS = sum(len(v) for v in eu.DIGITAL_DISTORTIONS.values())
 
 MAX_EVAL_JOBS = int(os.environ.get("SOK_DEMO_MAX_JOBS", "1200"))
 
@@ -210,11 +220,11 @@ def do_evaluate(state, selected_dist_labels, *setting_lists,
         return ("⚠️ Select at least one distortion type.", empty_df,
                 gr.update(choices=[], value=None), state)
 
-    dist_keys = list(eu.DIGITAL_DISTORTIONS)
+    dist_keys = DIST_KEYS
     jobs = []
     for key in state["wm"]:
         for label in selected_dist_labels:
-            dkey = eu.LABELS_TO_KEY[label]
+            dkey = CHOICE_TO_KEY[label]
             all_settings = eu.DIGITAL_DISTORTIONS[dkey]
             chosen = setting_lists[dist_keys.index(dkey)]
             settings = [s for s in all_settings if str(s) in set(chosen)]
@@ -283,6 +293,39 @@ def do_evaluate(state, selected_dist_labels, *setting_lists,
     return (status, gr.update(value=rows),
             gr.update(choices=choices, value=(choices[0] if choices else None)),
             state)
+
+
+def plan_summary(selected_method_names, selected_dist_labels, *setting_lists):
+    """Live preview of how much work the current selection implies."""
+    n_methods = len([n for n in (selected_method_names or [])
+                     if n in AVAILABLE_NAMES])
+    if not selected_dist_labels:
+        return ("_No distortion type selected — pick at least one above "
+                f"(10 types, {TOTAL_SETTINGS} attack settings in total)._")
+
+    per_type, n_settings = [], 0
+    for label in selected_dist_labels:
+        dkey = CHOICE_TO_KEY[label]
+        chosen = setting_lists[DIST_KEYS.index(dkey)]
+        total = len(eu.DIGITAL_DISTORTIONS[dkey])
+        n_settings += len(chosen)
+        if len(chosen) != total:
+            per_type.append(f"{eu.DISTORTION_LABELS[dkey]}: {len(chosen)}/{total}")
+
+    if n_settings == 0:
+        return ("⚠️ _The selected distortion types have **no settings** ticked — "
+                "open **Attack settings per distortion type** below._")
+
+    jobs = n_methods * n_settings
+    msg = (f"**Planned:** {len(selected_dist_labels)} distortion type(s), "
+           f"**{n_settings}** attack setting(s) × **{n_methods}** method(s) "
+           f"= **{jobs}** evaluation(s).")
+    if per_type:
+        msg += "  \nNarrowed: " + "; ".join(per_type) + "."
+    if jobs > MAX_EVAL_JOBS:
+        msg += (f"  \n⚠️ Above the cap of {MAX_EVAL_JOBS} — deselect some "
+                f"methods, types, or settings (or raise `SOK_DEMO_MAX_JOBS`).")
+    return msg
 
 
 def do_play(state, play_key):
@@ -396,20 +439,29 @@ def build_app() -> gr.Blocks:
         gr.Markdown("## 2) Digital distortions & robustness evaluation")
         dist_sel = gr.CheckboxGroup(
             choices=DIST_LABELS, value=[],
-            label="Distortion types (each selected type applies all of its "
-                  "settings by default — narrow them below)")
+            label=f"Distortion types — {len(DIST_LABELS)} types, "
+                  f"{TOTAL_SETTINGS} attack settings in total (each selected "
+                  f"type applies all of its settings unless you narrow them below)")
         with gr.Row():
             all_dist_btn = gr.Button("Select all distortions", size="sm")
             no_dist_btn = gr.Button("Clear distortions", size="sm")
 
         setting_groups = []
-        with gr.Accordion("Distortion settings (optional)", open=False):
+        with gr.Accordion(f"Attack settings per distortion type — tick a subset "
+                          f"to test fewer than all {TOTAL_SETTINGS}", open=False):
+            gr.Markdown(
+                "All settings are selected by default. Untick individual "
+                "values to evaluate only a subset of a distortion's settings.")
+            with gr.Row():
+                all_set_btn = gr.Button("Select all settings", size="sm")
+                no_set_btn = gr.Button("Clear all settings", size="sm")
             for key, settings in eu.DIGITAL_DISTORTIONS.items():
                 setting_groups.append(gr.CheckboxGroup(
                     choices=[str(s) for s in settings],
                     value=[str(s) for s in settings],
-                    label=eu.DISTORTION_LABELS[key]))
+                    label=f"{eu.DISTORTION_LABELS[key]} — {len(settings)} settings"))
 
+        plan_md = gr.Markdown()
         eval_btn = gr.Button("② Apply distortions & evaluate", variant="primary")
         eval_status = gr.Markdown()
         results_df = gr.Dataframe(
@@ -441,6 +493,20 @@ def build_app() -> gr.Blocks:
         all_dist_btn.click(lambda: gr.update(value=DIST_LABELS),
                            outputs=dist_sel)
         no_dist_btn.click(lambda: gr.update(value=[]), outputs=dist_sel)
+        all_set_btn.click(
+            lambda: [gr.update(value=[str(s) for s in v])
+                     for v in eu.DIGITAL_DISTORTIONS.values()],
+            outputs=setting_groups)
+        no_set_btn.click(
+            lambda: [gr.update(value=[]) for _ in eu.DIGITAL_DISTORTIONS],
+            outputs=setting_groups)
+
+        # Live "how much work is this?" preview.  .change also fires when the
+        # select-all / clear buttons update these components programmatically.
+        plan_inputs = [method_sel, dist_sel] + setting_groups
+        for comp in plan_inputs:
+            comp.change(plan_summary, inputs=plan_inputs, outputs=plan_md)
+        demo.load(plan_summary, inputs=plan_inputs, outputs=plan_md)
 
         per_method_outputs = []
         for g, md, au, im in zip(method_groups, method_mds,
