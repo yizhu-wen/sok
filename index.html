@@ -3,373 +3,330 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paper Overview and Demo</title>
-  <meta name="description" content="Paper overview and reviewer demo page for audio watermarking removal attack examples.">
+  <title>SoK: Audio Watermarking Robustness</title>
+  <meta name="description" content="Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement Study — project page with interactive audio demos.">
   <style>
     :root {
-      --ink: #17211f;
-      --muted: #5d6966;
-      --line: #d9e0de;
+      --ink: #1a1a2e;
+      --muted: #5c6370;
+      --line: #e1e4e8;
       --paper: #ffffff;
-      --wash: #f6f8f5;
+      --wash: #f6f8fa;
       --accent: #2f6f52;
-      --blue: #315d8f;
+      --accent-light: #e8f5ee;
+      --blue: #0366d6;
+      --red: #b4524c;
+      --red-light: #fff6f5;
+      --radius: 10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-    * {
-      box-sizing: border-box;
-      letter-spacing: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      margin: 0;
       color: var(--ink);
-      background: var(--paper);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    a {
-      color: var(--blue);
-    }
-
-    header {
-      border-bottom: 1px solid var(--line);
       background: var(--wash);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
     }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     .wrap {
-      max-width: 1220px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 28px 20px;
+      padding: 0 24px;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 2rem;
-      line-height: 1.15;
+    /* ── Hero header ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      padding: 56px 24px 48px;
+      text-align: center;
     }
 
-    h2 {
-      margin: 0 0 8px;
-      font-size: 1.35rem;
-      line-height: 1.2;
+    .hero h1 {
+      font-size: 2.2rem;
+      line-height: 1.25;
+      font-weight: 800;
+      max-width: 880px;
+      margin: 0 auto 12px;
     }
 
-    p {
-      margin: 0;
+    .hero .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 720px;
+      margin: 0 auto 28px;
     }
 
-    .intro {
-      width: 100%;
-      margin-top: 10px;
-      color: var(--muted);
-    }
-
-    .quick-links {
+    .hero-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .quick-links a {
-      display: inline-flex;
-      align-items: center;
-      min-height: 36px;
-      padding: 7px 10px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--paper);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.93rem;
-    }
-
-    .paper-info {
-      margin-top: 18px;
-      padding: 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--paper);
-    }
-
-    .paper-info h2 {
-      margin-bottom: 6px;
-      font-size: 1.15rem;
-    }
-
-    .paper-info p {
-      color: var(--muted);
-    }
-
-    .facts {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .fact {
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--wash);
-    }
-
-    .fact strong {
-      display: block;
-      color: var(--accent);
-      font-size: 1.35rem;
-      line-height: 1;
-    }
-
-    .fact span {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .takeaway {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-    }
-
-    .takeaway-grid {
-      display: grid;
-      grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+      justify-content: center;
       gap: 12px;
     }
 
-    .takeaway-card {
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--wash);
-    }
-
-    .finding-card {
-      border-left: 5px solid #b4524c;
-      background: #fff6f5;
-    }
-
-    .suggestion-card {
-      border-left: 5px solid var(--accent);
-      background: #f4f9f6;
-    }
-
-    .takeaway-label {
-      display: block;
-      margin-bottom: 7px;
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .finding-card .takeaway-label {
-      color: #b4524c;
-    }
-
-    .takeaway-card > strong {
-      display: block;
-      color: var(--ink);
-      font-size: 1.08rem;
-      line-height: 1.25;
-    }
-
-    .failure-tags,
-    .suggestion-list {
-      margin-top: 12px;
-    }
-
-    .tag-heading {
-      display: block;
-      margin-top: 12px;
-      color: #7e312c;
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .failure-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 7px;
-    }
-
-    .failure-tags span {
+    .hero-links a {
       display: inline-flex;
       align-items: center;
-      min-height: 30px;
-      padding: 5px 8px;
-      border: 1px solid #e0b6b2;
-      border-radius: 999px;
-      background: #fff;
-      color: #7e312c;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary { background: var(--accent); }
+    .btn-primary:hover { background: #257a4a; text-decoration: none; }
+    .btn-outline { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); }
+    .btn-outline:hover { background: rgba(255,255,255,0.22); text-decoration: none; }
+
+    .hero-links svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* ── Section scaffolding ── */
+    section { padding: 48px 0; }
+    section + section { padding-top: 0; }
+
+    .section-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      margin-bottom: 24px;
+      max-width: 760px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── At a glance facts ── */
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .fact-card {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .fact-card .number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+
+    .fact-card .label {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
       font-size: 0.88rem;
+    }
+
+    /* ── Overview two-col ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .overview-text h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .overview-text p { color: var(--muted); margin-bottom: 14px; }
+
+    .rq-list { list-style: none; }
+    .rq-list li {
+      padding: 12px 14px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 10px;
+      font-size: 0.94rem;
+    }
+    .rq-list li strong { color: var(--ink); }
+    .rq-list li .rq-answer { display: block; margin-top: 4px; color: var(--muted); font-size: 0.88rem; }
+
+    .overview-figure img {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+    }
+
+    .overview-figure figcaption {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+
+    /* ── Watermark methods table ── */
+    .methods-table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    .methods-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .methods-table th,
+    .methods-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    .methods-table thead th {
+      background: #f0f4f2;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .methods-table tbody tr:hover { background: var(--wash); }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
       font-weight: 700;
     }
 
-    .suggestion-list {
+    .badge-ai { background: #dbeafe; color: #1e40af; }
+    .badge-trad { background: #fef3c7; color: #92400e; }
+
+    /* ── Findings & suggestions ── */
+    .findings-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      padding: 0;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .finding-card {
+      padding: 20px;
+      border-left: 5px solid var(--red);
+      background: var(--red-light);
+    }
+
+    .suggestion-card {
+      padding: 20px;
+      border-left: 5px solid var(--accent);
+      background: var(--accent-light);
+    }
+
+    .card-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .finding-card .card-label { color: var(--red); }
+    .suggestion-card .card-label { color: var(--accent); }
+
+    .card > strong, .finding-card > strong, .suggestion-card > strong {
+      display: block;
+      font-size: 1.05rem;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .attack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .attack-tags span {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #e0b6b2;
+      color: #7e312c;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .suggestion-list {
       list-style: none;
     }
 
     .suggestion-list li {
-      padding: 9px 10px;
+      padding: 8px 10px;
       border: 1px solid #cfe1d8;
       border-radius: 7px;
       background: #fff;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .suggestion-list li strong { display: block; color: var(--ink); }
+
+    /* ── Figure gallery ── */
+    .figure-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .fig-card {
+      overflow: hidden;
+    }
+
+    .fig-card h3 {
+      padding: 16px 18px 4px;
+      font-size: 1.05rem;
+    }
+
+    .fig-card > p {
+      padding: 0 18px 14px;
       color: var(--muted);
       font-size: 0.9rem;
     }
 
-    .suggestion-list strong {
-      display: block;
-      color: var(--ink);
-    }
-
-    .paper-overview {
-      margin-bottom: 22px;
-    }
-
-    .eyebrow {
-      color: var(--accent);
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .overview-lead {
-      display: grid;
-      grid-template-columns: minmax(280px, 0.75fr) minmax(360px, 1.25fr);
-      gap: 18px;
-      align-items: start;
-    }
-
-    .overview-lead h2 {
-      margin-top: 6px;
-      font-size: 1.65rem;
-    }
-
-    .overview-copy {
-      color: var(--muted);
-    }
-
-    .rq-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .rq {
-      padding: 10px 12px;
-      border-left: 4px solid var(--accent);
-      background: var(--wash);
-      color: var(--muted);
-    }
-
-    .rq strong {
-      color: var(--ink);
-    }
-
-    .rq-answer {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.94rem;
-    }
-
-    .rq-answer strong {
-      color: var(--accent);
-    }
-
-    figure {
-      margin: 0;
-    }
-
-    .paper-figure,
-    .figure-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--paper);
-    }
-
-    .paper-figure {
-      overflow: hidden;
-    }
-
-    .paper-figure img,
-    .figure-card img {
+    .fig-card img {
       display: block;
       width: 100%;
       height: auto;
-      background: #fff;
-    }
-
-    .paper-figure.featured img,
-    .figure-card > img {
-      padding: 10px;
-    }
-
-    figcaption {
-      padding: 10px 12px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .pipeline-caption {
-      text-align: center;
-    }
-
-    .figure-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .figure-card {
-      overflow: hidden;
-    }
-
-    .figure-card h3 {
-      margin: 0;
-      padding: 14px 14px 6px;
-      font-size: 1.08rem;
-      line-height: 1.25;
-    }
-
-    .figure-card p {
-      padding: 0 14px 14px;
-      color: var(--muted);
-      font-size: 0.94rem;
+      padding: 6px 14px;
     }
 
     .image-pair {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-      padding: 10px;
-      background: #fff;
-    }
-
-    .image-pair img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      padding: 10px 14px;
     }
 
     .image-subbox {
@@ -377,620 +334,577 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--wash);
-    }
-
-    .image-subbox img {
-      border: 0;
-    }
-
-    .image-subbox span {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 0.88rem;
-      font-weight: 700;
       text-align: center;
     }
 
-    .chart-pair {
-      padding-top: 0;
-    }
+    .image-subbox img { width: 100%; border: 0; border-radius: 6px; }
+    .image-subbox span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.82rem; font-weight: 600; }
 
-    .chart-pair img {
-      object-fit: contain;
-      background: #fff;
-      padding: 6px;
-    }
-
-    .tts-chart-row {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+    .tts-chart-row { grid-template-columns: repeat(4, 1fr); }
 
     .quality-table-wrap {
       margin: 0 14px 14px;
       overflow-x: auto;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #fff;
     }
 
     .quality-table {
-      min-width: 1120px;
-      font-size: 0.82rem;
+      width: 100%;
+      min-width: 1000px;
+      font-size: 0.8rem;
+      border-collapse: collapse;
     }
 
     .quality-table caption {
       padding: 10px 12px;
       color: var(--muted);
       text-align: left;
-      font-size: 0.88rem;
-      font-weight: 700;
+      font-size: 0.85rem;
+      font-weight: 600;
     }
 
-    .quality-table th,
-    .quality-table td {
+    .quality-table th, .quality-table td {
       padding: 7px 8px;
       text-align: center;
       white-space: nowrap;
-    }
-
-    .quality-table th {
-      position: static;
-      top: auto;
-      z-index: auto;
-      background: #edf2ef;
-    }
-
-    .quality-table td {
-      font-size: 0.82rem;
-    }
-
-    .quality-good {
-      background: #dff1e7;
-      color: #1f684b;
-      font-weight: 700;
-    }
-
-    .quality-bad {
-      background: #fde5e2;
-      color: #9b3d36;
-      font-weight: 700;
-    }
-
-    main .wrap {
-      padding-top: 30px;
-      padding-bottom: 44px;
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--paper);
-    }
-
-    .toc {
-      margin-bottom: 18px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--paper);
-    }
-
-    .toc h2 {
-      margin-bottom: 12px;
-    }
-
-    .toc-links {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .toc-links a {
-      display: block;
-      min-height: 76px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--wash);
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .toc-links strong,
-    .toc-links span {
-      display: block;
-    }
-
-    .toc-links span {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .panel-head {
-      display: grid;
-      grid-template-columns: minmax(260px, 1fr) minmax(320px, 1fr);
-      gap: 18px;
-      align-items: end;
-      padding: 18px;
       border-bottom: 1px solid var(--line);
-      background: var(--wash);
     }
 
-    .panel-head p {
-      color: var(--muted);
+    .quality-table thead th { background: #f0f4f2; }
+    .quality-good { background: #dff1e7; color: #1f684b; font-weight: 700; }
+    .quality-bad { background: #fde5e2; color: #9b3d36; font-weight: 700; }
+
+    /* ── Audio demo section ── */
+    .demo-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 20px;
     }
 
-    .filters {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    label {
+    .demo-controls label {
       display: block;
       color: var(--muted);
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
+      margin-bottom: 4px;
     }
 
-    select,
-    input {
-      width: 100%;
+    .demo-controls select,
+    .demo-controls input {
       min-height: 38px;
-      margin-top: 4px;
-      padding: 6px 9px;
+      padding: 6px 12px;
       border: 1px solid var(--line);
-      border-radius: 6px;
+      border-radius: 8px;
       background: #fff;
       color: var(--ink);
       font: inherit;
+      font-size: 0.9rem;
+      min-width: 180px;
     }
 
-    .count {
-      padding: 11px 18px;
-      border-bottom: 1px solid var(--line);
+    .demo-count {
       color: var(--muted);
-      font-size: 0.93rem;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
     }
 
-    .table-wrap {
-      overflow-x: auto;
+    /* ── Distortion group cards ── */
+    .distortion-group {
+      margin-bottom: 16px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 980px;
-    }
-
-    th,
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: middle;
-    }
-
-    th {
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      background: #edf2ef;
-      color: #3c4845;
-      font-size: 0.82rem;
-      text-transform: uppercase;
-    }
-
-    td {
-      font-size: 0.94rem;
-    }
-
-    tbody tr:hover {
-      background: #f9fbfa;
-    }
-
-    .design-table-wrap {
-      margin: 0 14px 14px;
-      overflow-x: auto;
+    .distortion-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
+      border-radius: var(--radius);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
     }
 
-    .design-table {
-      min-width: 760px;
-      font-size: 0.86rem;
-    }
+    .distortion-group-header:hover { background: var(--wash); }
 
-    .design-table caption {
-      padding: 10px 12px;
-      color: var(--muted);
-      text-align: left;
-      font-size: 0.88rem;
+    .distortion-group-header .group-title {
       font-weight: 700;
+      font-size: 1rem;
     }
 
-    .design-table th,
-    .design-table td {
-      padding: 8px 10px;
-      text-align: center;
+    .distortion-group-header .group-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 0.85rem;
     }
 
-    .design-table th {
-      position: static;
-      top: auto;
-      z-index: auto;
-      background: #edf2ef;
-      white-space: nowrap;
+    .distortion-group-header .chevron {
+      transition: transform 0.2s;
+      width: 20px;
+      height: 20px;
+      fill: var(--muted);
     }
 
-    .design-table td {
-      font-size: 0.86rem;
-      text-align: center;
+    .distortion-group.open .chevron { transform: rotate(180deg); }
+
+    .distortion-group-body {
+      display: none;
+      padding: 0;
     }
 
-    .group-row th {
-      position: static;
-      padding: 12px;
-      background: #e4ece8;
-      color: var(--accent);
+    .distortion-group.open .distortion-group-body { display: block; }
+
+    .setting-group {
+      border: 1px solid var(--line);
+      border-top: 0;
+      background: var(--paper);
+    }
+
+    .setting-group:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+
+    .setting-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px 10px 32px;
+      background: var(--wash);
+      border-bottom: 1px solid var(--line);
       font-size: 0.9rem;
-      text-transform: none;
+      cursor: pointer;
+      user-select: none;
     }
 
-    audio {
-      width: 240px;
-      max-width: 100%;
+    .setting-header:hover { background: #eef1ee; }
+
+    .setting-header .setting-name { font-weight: 600; color: var(--ink); }
+    .setting-header .setting-info { color: var(--muted); font-size: 0.82rem; }
+
+    .setting-body { display: none; }
+    .setting-group.open .setting-body { display: block; }
+
+    .sample-row {
+      display: grid;
+      grid-template-columns: 36px 1fr 260px;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 18px 10px 44px;
+      border-bottom: 1px solid #f0f2f0;
+      font-size: 0.88rem;
     }
 
-    code {
-      color: var(--blue);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 0.88em;
-      overflow-wrap: anywhere;
-    }
+    .sample-row:last-child { border-bottom: 0; }
 
-    .source {
-      max-width: 360px;
+    .sample-idx {
       color: var(--muted);
       font-size: 0.82rem;
-      overflow-wrap: anywhere;
-    }
-
-    footer {
-      padding: 18px 20px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
+      font-weight: 600;
       text-align: center;
-      font-size: 0.9rem;
     }
 
+    .sample-info { color: var(--muted); }
+    .sample-info strong { color: var(--ink); display: block; }
+
+    .sample-row audio {
+      width: 100%;
+      max-width: 260px;
+      height: 36px;
+    }
+
+    .show-more-btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background: var(--wash);
+      border: none;
+      border-top: 1px solid var(--line);
+      color: var(--blue);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .show-more-btn:hover { background: #eef1ee; }
+
+    .category-banner {
+      margin-top: 28px;
+      margin-bottom: 14px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .category-banner:first-of-type { margin-top: 0; }
+
+    .cat-digital { background: #dbeafe; color: #1e40af; }
+    .cat-physical { background: #fef3c7; color: #92400e; }
+    .cat-ai { background: #ede9fe; color: #5b21b6; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 48px;
+      padding: 24px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+      background: var(--paper);
+    }
+
+    footer a { color: var(--blue); }
+
+    /* ── Responsive ── */
     @media (max-width: 900px) {
-      .panel-head {
-        grid-template-columns: 1fr;
-      }
-
-      .overview-lead,
-      .figure-grid,
-      .takeaway-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .rq-list {
-        grid-template-columns: 1fr;
-      }
-
-      .filters,
-      .toc-links,
-      .facts {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .hero h1 { font-size: 1.7rem; }
+      .facts-grid { grid-template-columns: repeat(2, 1fr); }
+      .overview-grid, .findings-grid { grid-template-columns: 1fr; }
+      .image-pair { grid-template-columns: 1fr; }
+      .tts-chart-row { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 560px) {
-      .wrap {
-        padding-left: 14px;
-        padding-right: 14px;
-      }
-
-      h1 {
-        font-size: 1.55rem;
-      }
-
-      .filters,
-      .toc-links,
-      .facts,
-      .suggestion-list,
-      .image-pair {
-        grid-template-columns: 1fr;
-      }
+      .hero { padding: 36px 16px 32px; }
+      .hero h1 { font-size: 1.4rem; }
+      .facts-grid { grid-template-columns: 1fr 1fr; }
+      .sample-row { grid-template-columns: 1fr; gap: 6px; }
+      .sample-row audio { max-width: 100%; }
+      .demo-controls select, .demo-controls input { min-width: 140px; }
     }
   </style>
 </head>
 <body>
-  <header>
+
+  <!-- ════════ Hero ════════ -->
+  <header class="hero">
     <div class="wrap">
-      <h1>Paper Overview and Demo</h1>
-      <p class="intro">
-        Overview and reviewer audio demos for
-        <strong>Is Audio Watermarking Robust to Removal Attacks? A Comprehensive
-        Measurement Study</strong>. The demo table below lists one representative
-        audio preview for each distortion setting from <code>distortion_demo_audio/</code>,
-        <code>physical/</code>, or <code>ai_distorted/</code>. Every playable
-        preview is capped at 10 seconds.
+      <h1>Is Audio Watermarking Robust to Removal Attacks?</h1>
+      <p class="subtitle">
+        A Comprehensive Measurement Study &mdash; benchmarking 10 open-source audio
+        watermarking methods against digital, physical, and AI-induced removal attacks.
       </p>
-      <section class="paper-info" aria-labelledby="paper-info-title">
-        <h2 id="paper-info-title">Paper at a Glance</h2>
-        <p>
-          <strong>Is Audio Watermarking Robust to Removal Attacks? A Comprehensive
-          Measurement Study</strong> evaluates current audio watermarking systems
-          under quality-preserving removal attacks for speech and music.
-        </p>
-        <div class="facts">
-          <div class="fact"><strong>26</strong><span>watermarking schemes analyzed</span></div>
-          <div class="fact"><strong>10</strong><span>open-source methods reproduced</span></div>
-          <div class="fact"><strong>5</strong><span>3 speech and 2 music datasets</span></div>
-          <div class="fact"><strong>127</strong><span>attack settings in the paper evaluation</span></div>
-        </div>
-        <div class="takeaway" aria-label="Highlighted key findings and suggestions">
-          <div class="takeaway-grid">
-            <div class="takeaway-card finding-card">
-              <span class="takeaway-label">Key finding</span>
-              <strong>No evaluated method is robust to all tested attacks.</strong>
-              <span class="tag-heading">Most effective attacks</span>
-              <div class="failure-tags" aria-label="Major failure modes">
-                <span>Pitch shift</span>
-                <span>Physical re-recording</span>
-                <span>Voice conversion</span>
-                <span>TTS regeneration</span>
-              </div>
-            </div>
-            <div class="takeaway-card suggestion-card">
-              <span class="takeaway-label">Suggestions</span>
-              <strong>Design and evaluation lessons for future audio watermarks.</strong>
-              <ul class="suggestion-list">
-                <li><strong>Frame-level repetition</strong>More recoverable evidence across time.</li>
-                <li><strong>Broader frequency coverage</strong>Less dependence on one fragile band.</li>
-                <li><strong>AI-distortion training</strong>Expose models to VC and TTS attacks.</li>
-                <li><strong>Subjective listening tests</strong>Measure utility beyond objective scores.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-      <nav class="quick-links" aria-label="Quick links">
-        <a href="#paper-overview">Paper overview</a>
-        <a href="#audio-table-title">Audio demos</a>
-        <a href="README.md">README</a>
-        <a href="demo_audio_clips/manifest.json">Audio manifest</a>
+      <nav class="hero-links">
+        <a class="btn-primary" href="#audio-demos">
+          <svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+          Audio Demos
+        </a>
+        <a class="btn-outline" href="#overview">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+          Paper Overview
+        </a>
+        <a class="btn-outline" href="https://anonymous.4open.science/r/sok-6DB0/README.md" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.79-.26.79-.58v-2.17c-3.34.73-4.04-1.41-4.04-1.41-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.19.7.8.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Source Code
+        </a>
+        <a class="btn-outline" href="#methods">
+          <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+          Watermark Methods
+        </a>
       </nav>
     </div>
   </header>
 
   <main>
     <div class="wrap">
-      <section class="paper-overview" id="paper-overview" aria-labelledby="paper-overview-title">
-        <div class="overview-lead">
-          <div>
-            <p class="eyebrow">Paper overview</p>
-            <h2 id="paper-overview-title">A quality-aware robustness study</h2>
-            <p class="overview-copy">
-              The paper studies whether modern audio watermarks survive
-              practical removal attacks while preserving the usefulness of the
-              audio. It connects a component-wise taxonomy of 26 schemes with a
-              benchmark of 10 reproducible methods across speech and music. We
-              answer three research questions:
-            </p>
+
+      <!-- ════════ At a Glance ════════ -->
+      <section id="glance">
+        <div class="facts-grid">
+          <div class="card fact-card">
+            <span class="number">26</span>
+            <span class="label">Watermarking schemes analyzed</span>
           </div>
-          <figure class="paper-figure featured">
-            <img src="assets/paper/system-design.png" alt="Generalized audio watermark pipeline from the paper.">
-            <figcaption class="pipeline-caption">Generalized audio watermarking pipeline</figcaption>
+          <div class="card fact-card">
+            <span class="number">10</span>
+            <span class="label">Open-source methods reproduced</span>
+          </div>
+          <div class="card fact-card">
+            <span class="number">5</span>
+            <span class="label">Datasets (3 speech + 2 music)</span>
+          </div>
+          <div class="card fact-card">
+            <span class="number">127</span>
+            <span class="label">Attack settings evaluated</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════ Paper overview ════════ -->
+      <section id="overview">
+        <h2 class="section-title">Paper Overview</h2>
+        <p class="section-lead">
+          We study whether modern audio watermarks survive practical removal
+          attacks while preserving the usefulness of the audio, connecting a
+          component-wise taxonomy of 26 schemes with a benchmark of 10
+          reproducible methods across speech and music.
+        </p>
+
+        <div class="overview-grid">
+          <div class="overview-text">
+            <h3>Research Questions</h3>
+            <ul class="rq-list">
+              <li>
+                <strong>RQ1.</strong> How do traditional and AI-based methods compare in robustness?
+                <span class="rq-answer"><strong>Answer:</strong> AI-based methods defend against 51.63% of attack settings vs. 28.97% for traditional methods.</span>
+              </li>
+              <li>
+                <strong>RQ2.</strong> What are the main robustness challenges?
+                <span class="rq-answer"><strong>Answer:</strong> Physical and AI-induced distortions remain the main challenges&mdash;pitch shift, time stretch, re-recording, VC, and TTS are major failure modes.</span>
+              </li>
+              <li>
+                <strong>RQ3.</strong> How do design choices affect robustness?
+                <span class="rq-answer"><strong>Answer:</strong> Message repetition and broad frequency coverage improve robustness; AI-distortion training helps against AI-induced attacks.</span>
+              </li>
+            </ul>
+          </div>
+          <figure class="overview-figure">
+            <img src="assets/paper/system-design.png" alt="Generalized audio watermark pipeline">
+            <figcaption>Generalized audio watermarking pipeline from the paper</figcaption>
           </figure>
         </div>
 
-        <div class="rq-list" aria-label="Research questions">
-          <div class="rq">
-            <strong>RQ1.</strong> How do traditional and AI-based methods compare in robustness?
-            <span class="rq-answer"><strong>Answer:</strong> AI-based methods are more robust on average, defending against 51.63% of evaluated attack settings versus 28.97% for traditional methods.</span>
+        <!-- Findings & Suggestions -->
+        <div class="findings-grid">
+          <div class="card finding-card">
+            <span class="card-label">Key Finding</span>
+            <strong>No evaluated method is robust to all tested attacks.</strong>
+            <div class="attack-tags">
+              <span>Pitch shift</span>
+              <span>Physical re-recording</span>
+              <span>Voice conversion</span>
+              <span>TTS regeneration</span>
+            </div>
           </div>
-          <div class="rq">
-            <strong>RQ2.</strong> What are the main robustness challenges of existing methods?
-            <span class="rq-answer"><strong>Answer:</strong> Physical and AI-induced distortions remain the main challenges, with pitch shift, time stretch, physical re-recording, VC, and TTS as major failure modes.</span>
-          </div>
-          <div class="rq">
-            <strong>RQ3.</strong> How do architectural design choices affect robustness?
-            <span class="rq-answer"><strong>Answer:</strong> Message repetition and broad frequency-range distribution improve robustness against digital and physical attacks, while AI-distortion training helps against AI-induced attacks.</span>
+          <div class="card suggestion-card">
+            <span class="card-label">Suggestions</span>
+            <strong>Design and evaluation lessons for future audio watermarks.</strong>
+            <ul class="suggestion-list">
+              <li><strong>Frame-level repetition</strong>More recoverable evidence across time.</li>
+              <li><strong>Broader frequency coverage</strong>Less dependence on one fragile band.</li>
+              <li><strong>AI-distortion training</strong>Expose models to VC and TTS attacks.</li>
+              <li><strong>Subjective listening tests</strong>Measure utility beyond objective scores.</li>
+            </ul>
           </div>
         </div>
+      </section>
 
-        <div class="figure-grid">
-          <article class="figure-card">
-            <h3>Watermark structure explains robustness</h3>
-            <p>
-              The taxonomy table below summarizes design factors that relate to
-              robustness, including message repetition, frequency range, and
-              training distortions.
-            </p>
-            <div class="design-table-wrap">
-              <table class="design-table">
-                <caption>Design taxonomy of the selected methods</caption>
-                <thead>
-                  <tr>
-                    <th>Method</th>
-                    <th>Model Type</th>
-                    <th>Message Repetition</th>
-                    <th>Frequency Range (Hz)</th>
-                    <th>Training Distortions</th>
-                    <th>Watermark Embedder</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>RobustDNN</td>
-                    <td>AI</td>
-                    <td>Frame level</td>
-                    <td>0-8000</td>
-                    <td>3</td>
-                    <td>Encoder network</td>
-                  </tr>
-                  <tr>
-                    <td>Timbre</td>
-                    <td>AI</td>
-                    <td>Frame level</td>
-                    <td>0-8000</td>
-                    <td>1</td>
-                    <td>Encoder network</td>
-                  </tr>
-                  <tr>
-                    <td>AudioSeal</td>
-                    <td>AI</td>
-                    <td>Frame level</td>
-                    <td>0-8000</td>
-                    <td>14</td>
-                    <td>Encoder network</td>
-                  </tr>
-                  <tr>
-                    <td>WavMark</td>
-                    <td>AI</td>
-                    <td>Block level</td>
-                    <td>0-8000</td>
-                    <td>10</td>
-                    <td>INN</td>
-                  </tr>
-                  <tr>
-                    <td>SilentCipher</td>
-                    <td>AI</td>
-                    <td>Frame level</td>
-                    <td>0-4000</td>
-                    <td>6</td>
-                    <td>Encoder network</td>
-                  </tr>
-                  <tr>
-                    <td>AWARE</td>
-                    <td>AI</td>
-                    <td>None</td>
-                    <td>0-8000</td>
-                    <td>0</td>
-                    <td>Adversarial optimization</td>
-                  </tr>
-                  <tr>
-                    <td>audiowmark</td>
-                    <td>Traditional</td>
-                    <td>Block level</td>
-                    <td>861-4307</td>
-                    <td>N/A</td>
-                    <td>FFT bin</td>
-                  </tr>
-                  <tr>
-                    <td>FSVC</td>
-                    <td>Traditional</td>
-                    <td>None</td>
-                    <td>1088-1448</td>
-                    <td>N/A</td>
-                    <td>DCT coefficient</td>
-                  </tr>
-                  <tr>
-                    <td>Patchwork</td>
-                    <td>Traditional</td>
-                    <td>Layer level</td>
-                    <td>3000-7000</td>
-                    <td>N/A</td>
-                    <td>DCT coefficient</td>
-                  </tr>
-                  <tr>
-                    <td>Norm-space</td>
-                    <td>Traditional</td>
-                    <td>None</td>
-                    <td>0-8000</td>
-                    <td>N/A</td>
-                    <td>DCT coefficient</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p>
-              The spectrogram below provides a visual comparison of where watermark
-              energy appears across the selected methods.
-            </p>
-            <img src="assets/paper/watermark-spectrogram.jpg" alt="Paper spectrogram visualization of watermark-only signals across selected methods.">
+      <!-- ════════ Implemented watermark methods ════════ -->
+      <section id="methods">
+        <h2 class="section-title">Implemented Watermark Methods</h2>
+        <p class="section-lead">
+          We reproduce 10 open-source watermarking methods spanning both AI-based
+          and traditional signal-processing approaches, each with different embedding
+          strategies and robustness characteristics.
+        </p>
+        <div class="card">
+          <div class="methods-table-wrap">
+            <table class="methods-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Method</th>
+                  <th>Type</th>
+                  <th>Watermark Pattern</th>
+                  <th>Frequency Range</th>
+                  <th>Message Repetition</th>
+                  <th>Training Distortions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><strong>AudioSeal</strong></td>
+                  <td><span class="badge badge-ai">AI</span></td>
+                  <td>Encoder network &rarr; waveform additive</td>
+                  <td>0 &ndash; 8000 Hz</td>
+                  <td>Frame level</td>
+                  <td>14</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><strong>WavMark</strong></td>
+                  <td><span class="badge badge-ai">AI</span></td>
+                  <td>Invertible Neural Network (INN)</td>
+                  <td>0 &ndash; 8000 Hz</td>
+                  <td>Block level</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><strong>SilentCipher</strong></td>
+                  <td><span class="badge badge-ai">AI</span></td>
+                  <td>Encoder network &rarr; waveform additive</td>
+                  <td>0 &ndash; 4000 Hz</td>
+                  <td>Frame level</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><strong>Timbre</strong></td>
+                  <td><span class="badge badge-ai">AI</span></td>
+                  <td>Encoder network &rarr; waveform additive</td>
+                  <td>0 &ndash; 8000 Hz</td>
+                  <td>Frame level</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><strong>RobustDNN</strong></td>
+                  <td><span class="badge badge-ai">AI</span></td>
+                  <td>Encoder network &rarr; waveform additive</td>
+                  <td>0 &ndash; 8000 Hz</td>
+                  <td>Frame level</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td><strong>AWARE</strong></td>
+                  <td><span class="badge badge-ai">AI</span></td>
+                  <td>Adversarial optimization</td>
+                  <td>0 &ndash; 8000 Hz</td>
+                  <td>None</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td><strong>audiowmark</strong></td>
+                  <td><span class="badge badge-trad">Traditional</span></td>
+                  <td>FFT bin modification</td>
+                  <td>861 &ndash; 4307 Hz</td>
+                  <td>Block level</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td><strong>FSVC</strong></td>
+                  <td><span class="badge badge-trad">Traditional</span></td>
+                  <td>DCT coefficient modification</td>
+                  <td>1088 &ndash; 1448 Hz</td>
+                  <td>None</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td><strong>Patchwork</strong></td>
+                  <td><span class="badge badge-trad">Traditional</span></td>
+                  <td>DCT coefficient modification (multi-layer)</td>
+                  <td>3000 &ndash; 7000 Hz</td>
+                  <td>Layer level</td>
+                  <td>N/A</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td><strong>Norm-space</strong></td>
+                  <td><span class="badge badge-trad">Traditional</span></td>
+                  <td>DCT coefficient modification (norm-space)</td>
+                  <td>0 &ndash; 8000 Hz</td>
+                  <td>None</td>
+                  <td>N/A</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════ Evaluation settings / figures ════════ -->
+      <section id="evaluation">
+        <h2 class="section-title">Evaluation Settings</h2>
+        <p class="section-lead">
+          We evaluate watermark robustness across three categories of removal
+          attacks: digital-level, physical-level, and AI-induced distortions.
+        </p>
+
+        <div class="figure-gallery">
+          <article class="card fig-card">
+            <h3>Watermark Spectrogram Comparison</h3>
+            <p>Visual comparison of where watermark energy appears across the 10 methods.</p>
+            <img src="assets/paper/watermark-spectrogram.jpg" alt="Spectrogram visualization of watermark-only signals across selected methods.">
           </article>
-          <article class="figure-card">
-            <h3>Pitch shift and time stretch break watermark alignment</h3>
+
+          <article class="card fig-card">
+            <h3>Digital-level: Pitch Shift &amp; Time Stretch</h3>
             <p>
-              Pitch shift and time stretch can lower bit recovery accuracy while
-              keeping speech or music useful under selected quality thresholds.
-              In this study, the quality-preservation thresholds are ViSQOL &gt; 3.0,
-              MUSHRA-Music &gt; 79, and MUSHRA-Speech &gt; 60.
+              Heatmap of watermark bit recovery accuracy and perceptual quality
+              under pitch-shift and time-stretch attacks. Quality thresholds:
+              ViSQOL &gt; 3.0, MUSHRA-Music &gt; 79, MUSHRA-Speech &gt; 60.
             </p>
-            <img src="assets/paper/digital-heatmap.png" alt="Paper heatmap showing watermark bit recovery accuracy and perceptual quality under pitch-shift and time-stretch attacks.">
+            <img src="assets/paper/digital-heatmap.png" alt="Heatmap: watermark accuracy under pitch-shift and time-stretch.">
           </article>
-          <article class="figure-card">
-            <h3>Physical re-recording is a major failure mode</h3>
+
+          <article class="card fig-card">
+            <h3>Physical-level: Re-recording</h3>
             <p>
               Re-recording introduces room, distance, microphone, and speaker
               effects. Distance causes larger accuracy drops than device changes.
             </p>
-            <div class="image-pair chart-pair">
+            <div class="image-pair">
               <div class="image-subbox">
-                <img src="assets/paper/physical-distance-accuracy.png" alt="Radar chart of watermark recovery accuracy under physical re-recording distance settings.">
+                <img src="assets/paper/physical-distance-accuracy.png" alt="Radar chart: recovery accuracy under distance settings.">
                 <span>Distance accuracy</span>
               </div>
               <div class="image-subbox">
-                <img src="assets/paper/physical-device-accuracy.png" alt="Radar chart of watermark recovery accuracy under physical re-recording device settings.">
+                <img src="assets/paper/physical-device-accuracy.png" alt="Radar chart: recovery accuracy under device settings.">
                 <span>Device accuracy</span>
               </div>
             </div>
             <div class="image-pair">
               <div class="image-subbox">
-                <img src="assets/paper/physical-default.png" alt="Paper photo of the default physical re-recording setup.">
+                <img src="assets/paper/physical-default.png" alt="Default physical re-recording setup.">
                 <span>Distance setting</span>
               </div>
               <div class="image-subbox">
-                <img src="assets/paper/physical-devices.png" alt="Paper photo of the different-device physical re-recording setup.">
+                <img src="assets/paper/physical-devices.png" alt="Different-device re-recording setup.">
                 <span>Device setting</span>
               </div>
             </div>
           </article>
-          <article class="figure-card">
-            <h3>AI-induced attacks change the signal source</h3>
+
+          <article class="card fig-card">
+            <h3>AI-induced: Voice Conversion &amp; TTS</h3>
             <p>
-              Voice conversion and TTS regeneration can preserve perceived
-              speech utility while discarding watermark traces from the waveform.
+              Voice conversion and TTS regeneration preserve perceived speech
+              utility while discarding watermark traces from the waveform.
             </p>
-            <div class="image-pair chart-pair">
+            <div class="image-pair">
               <div class="image-subbox">
-                <img src="assets/paper/vc-zeroshot-radar-chart.png" alt="Radar chart of watermark robustness under zero-shot voice conversion attacks.">
+                <img src="assets/paper/vc-zeroshot-radar-chart.png" alt="Radar chart: zero-shot VC.">
                 <span>Zero-shot VC</span>
               </div>
               <div class="image-subbox">
-                <img src="assets/paper/vc-fewshot-radar-chart.png" alt="Radar chart of watermark robustness under few-shot and adaptive voice conversion attacks.">
-                <span>Few-shot/adaptive VC</span>
+                <img src="assets/paper/vc-fewshot-radar-chart.png" alt="Radar chart: few-shot/adaptive VC.">
+                <span>Few-shot / Adaptive VC</span>
               </div>
             </div>
-            <div class="image-pair chart-pair tts-chart-row">
+            <div class="image-pair tts-chart-row">
               <div class="image-subbox">
-                <img src="assets/paper/yourtts-radar-chart.png" alt="Radar chart of watermark robustness under zero-shot YourTTS attack.">
+                <img src="assets/paper/yourtts-radar-chart.png" alt="Radar chart: YourTTS.">
                 <span>Zero-shot TTS</span>
               </div>
               <div class="image-subbox">
-                <img src="assets/paper/g-lim-radar-chart.png" alt="Radar chart of watermark robustness under adaptive TTS with Griffin-Lim vocoder.">
-                <span>Adaptive TTS + G-Lim</span>
+                <img src="assets/paper/g-lim-radar-chart.png" alt="Radar chart: Adaptive TTS + Griffin-Lim.">
+                <span>TTS + G-Lim</span>
               </div>
               <div class="image-subbox">
-                <img src="assets/paper/h-gan-radar-chart.png" alt="Radar chart of watermark robustness under adaptive TTS with universal HiFi-GAN vocoder.">
-                <span>Adaptive TTS + universal H-GAN</span>
+                <img src="assets/paper/h-gan-radar-chart.png" alt="Radar chart: Adaptive TTS + universal HiFi-GAN.">
+                <span>TTS + H-GAN</span>
               </div>
               <div class="image-subbox">
-                <img src="assets/paper/h-gan-star-radar-chart.png" alt="Radar chart of watermark robustness under adaptive TTS with adaptive HiFi-GAN vocoder.">
-                <span>Adaptive TTS + adaptive H-GAN</span>
+                <img src="assets/paper/h-gan-star-radar-chart.png" alt="Radar chart: Adaptive TTS + adaptive HiFi-GAN.">
+                <span>TTS + H-GAN*</span>
               </div>
             </div>
+
             <div class="quality-table-wrap">
               <table class="quality-table">
-                <caption>Imperceptibility metrics under AI-induced distortion. The quality-preservation thresholds are SECS &gt;= 0.8. Metric scores above the preservation threshold are marked in green, while scores below the threshold are marked in red.</caption>
+                <caption>Imperceptibility metrics under AI-induced distortion (SECS &ge; 0.8 threshold). Green = above threshold; red = below.</caption>
                 <thead>
                   <tr>
                     <th rowspan="4">Metric</th>
@@ -1009,323 +923,285 @@
                     <th colspan="3">FastSpeech2</th>
                   </tr>
                   <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>G-Lim</th>
-                    <th>H-GAN</th>
-                    <th>H-GAN</th>
-                    <th>G-Lim</th>
-                    <th>H-GAN</th>
-                    <th>H-GAN</th>
+                    <th></th><th></th><th></th><th></th><th></th><th></th>
+                    <th>G-Lim</th><th>H-GAN</th><th>H-GAN</th>
+                    <th>G-Lim</th><th>H-GAN</th><th>H-GAN</th>
                   </tr>
                   <tr>
-                    <th>Zero-shot</th>
-                    <th>Zero-shot</th>
-                    <th>Zero-shot</th>
-                    <th>Few-shot</th>
-                    <th>Adaptive</th>
-                    <th>Zero-shot</th>
-                    <th>Adaptive</th>
-                    <th>Adaptive</th>
-                    <th>Adaptive*</th>
-                    <th>Adaptive</th>
-                    <th>Adaptive</th>
-                    <th>Adaptive*</th>
+                    <th>Zero-shot</th><th>Zero-shot</th><th>Zero-shot</th><th>Few-shot</th><th>Adaptive</th>
+                    <th>Zero-shot</th><th>Adaptive</th><th>Adaptive</th><th>Adaptive*</th>
+                    <th>Adaptive</th><th>Adaptive</th><th>Adaptive*</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <th>ViSQOL</th>
                     <td>4.87</td>
-                    <td class="quality-good">3.82</td>
-                    <td class="quality-good">3.02</td>
-                    <td class="quality-good">3.96</td>
-                    <td class="quality-bad">2.54</td>
-                    <td class="quality-good">4.04</td>
-                    <td class="quality-bad">2.35</td>
-                    <td class="quality-bad">1.81</td>
-                    <td class="quality-bad">2.69</td>
-                    <td class="quality-bad">2.72</td>
-                    <td class="quality-bad">1.82</td>
-                    <td class="quality-bad">2.71</td>
-                    <td class="quality-bad">2.75</td>
+                    <td class="quality-good">3.82</td><td class="quality-good">3.02</td>
+                    <td class="quality-good">3.96</td><td class="quality-bad">2.54</td>
+                    <td class="quality-good">4.04</td><td class="quality-bad">2.35</td>
+                    <td class="quality-bad">1.81</td><td class="quality-bad">2.69</td>
+                    <td class="quality-bad">2.72</td><td class="quality-bad">1.82</td>
+                    <td class="quality-bad">2.71</td><td class="quality-bad">2.75</td>
                   </tr>
                   <tr>
                     <th>SECS</th>
                     <td>0.99</td>
-                    <td class="quality-good">0.84</td>
-                    <td class="quality-good">0.75</td>
-                    <td class="quality-good">0.90</td>
-                    <td class="quality-bad">0.67</td>
-                    <td class="quality-good">0.93</td>
-                    <td class="quality-good">0.83</td>
-                    <td class="quality-bad">0.69</td>
-                    <td class="quality-good">0.87</td>
-                    <td class="quality-good">0.87</td>
-                    <td class="quality-bad">0.71</td>
-                    <td class="quality-good">0.89</td>
-                    <td class="quality-good">0.90</td>
+                    <td class="quality-good">0.84</td><td class="quality-good">0.75</td>
+                    <td class="quality-good">0.90</td><td class="quality-bad">0.67</td>
+                    <td class="quality-good">0.93</td><td class="quality-good">0.83</td>
+                    <td class="quality-bad">0.69</td><td class="quality-good">0.87</td>
+                    <td class="quality-good">0.87</td><td class="quality-bad">0.71</td>
+                    <td class="quality-good">0.89</td><td class="quality-good">0.90</td>
                   </tr>
                   <tr>
                     <th>MUSHRA-Speech</th>
                     <td>100</td>
-                    <td class="quality-good">70</td>
-                    <td class="quality-good">64</td>
-                    <td class="quality-good">65</td>
-                    <td class="quality-good">76</td>
-                    <td class="quality-good">97</td>
-                    <td class="quality-good">78</td>
-                    <td class="quality-good">81</td>
-                    <td class="quality-good">85</td>
-                    <td class="quality-good">78</td>
-                    <td class="quality-good">79</td>
-                    <td class="quality-good">96</td>
-                    <td class="quality-good">72</td>
+                    <td class="quality-good">70</td><td class="quality-good">64</td>
+                    <td class="quality-good">65</td><td class="quality-good">76</td>
+                    <td class="quality-good">97</td><td class="quality-good">78</td>
+                    <td class="quality-good">81</td><td class="quality-good">85</td>
+                    <td class="quality-good">78</td><td class="quality-good">79</td>
+                    <td class="quality-good">96</td><td class="quality-good">72</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <img src="assets/paper/ai-distortion.png" alt="Paper diagram of zero-shot, few-shot, and adaptive AI-induced distortion attacks.">
+            <img src="assets/paper/ai-distortion.png" alt="Diagram of zero-shot, few-shot, and adaptive AI-induced distortion attacks.">
           </article>
         </div>
-
       </section>
 
-      <section class="toc" aria-labelledby="toc-title">
-        <h2 id="toc-title">Table of Contents</h2>
-        <div class="toc-links">
-          <a href="#audio-table-title" data-category-link="Digital-level">
-            <strong>Digital-level distortions</strong>
-            <span id="toc-digital">Loading...</span>
-          </a>
-          <a href="#audio-table-title" data-category-link="Physical-level">
-            <strong>Physical-level distortions</strong>
-            <span id="toc-physical">Loading...</span>
-          </a>
-          <a href="#audio-table-title" data-category-link="AI-induced">
-            <strong>AI-induced distortions</strong>
-            <span id="toc-ai">Loading...</span>
-          </a>
-        </div>
-      </section>
+      <!-- ════════ Audio demos ════════ -->
+      <section id="audio-demos">
+        <h2 class="section-title">Audio Demos</h2>
+        <p class="section-lead">
+          Listen to representative audio samples for each distortion setting.
+          Samples are grouped by distortion type. Expand a group to browse
+          individual settings, then expand a setting to listen to more samples.
+        </p>
 
-      <section class="panel" aria-labelledby="audio-table-title">
-        <div class="panel-head">
+        <div class="demo-controls">
           <div>
-            <h2 id="audio-table-title">Demo Audio Settings</h2>
-            <p>
-              Use the filters to narrow the table. Audio controls use clipped
-              MP3 previews under <code>demo_audio_clips/</code>.
-            </p>
+            <label for="filter-category">Category</label>
+            <select id="filter-category"><option value="">All categories</option></select>
           </div>
-          <div class="filters" aria-label="Audio filters">
-            <label>
-              Category
-              <select id="category-filter">
-                <option value="">All</option>
-              </select>
-            </label>
-            <label>
-              Distortion
-              <select id="distortion-filter">
-                <option value="">All</option>
-              </select>
-            </label>
-            <label>
-              Source Group
-              <select id="group-filter">
-                <option value="">All</option>
-              </select>
-            </label>
-            <label>
-              Search
-              <input id="search-filter" type="search" placeholder="setting, method, or source">
-            </label>
+          <div>
+            <label for="filter-distortion">Distortion</label>
+            <select id="filter-distortion"><option value="">All distortions</option></select>
+          </div>
+          <div>
+            <label for="filter-search">Search</label>
+            <input id="filter-search" type="search" placeholder="Type to filter...">
           </div>
         </div>
-        <div id="row-count" class="count">Loading audio table...</div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Category</th>
-                <th>Distortion</th>
-                <th>Setting / Variant</th>
-                <th>Source Group</th>
-                <th>Preview</th>
-                <th>Clip</th>
-                <th>Source WAV</th>
-              </tr>
-            </thead>
-            <tbody id="audio-rows"></tbody>
-          </table>
-        </div>
+
+        <div id="demo-count" class="demo-count">Loading audio demos...</div>
+        <div id="demo-container"></div>
       </section>
 
     </div>
   </main>
 
   <footer>
-    Static reviewer page for the audio watermarking robustness measurement study.
+    <div class="wrap">
+      <p>
+        <strong>Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement Study</strong>
+      </p>
+      <p style="margin-top:6px;">
+        <a href="https://anonymous.4open.science/r/sok-6DB0/README.md" target="_blank" rel="noopener">Source Code</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#overview">Paper Overview</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#methods">Watermark Methods</a>
+        &nbsp;&middot;&nbsp;
+        <a href="#audio-demos">Audio Demos</a>
+      </p>
+    </div>
   </footer>
 
   <script>
-    const state = {
-      rows: [],
-      filtered: []
-    };
+    const INITIAL_SHOW = 3;
+
+    const state = { rows: [], filtered: [] };
 
     const els = {
-      tbody: document.getElementById("audio-rows"),
-      count: document.getElementById("row-count"),
-      category: document.getElementById("category-filter"),
-      distortion: document.getElementById("distortion-filter"),
-      group: document.getElementById("group-filter"),
-      search: document.getElementById("search-filter"),
-      tocDigital: document.getElementById("toc-digital"),
-      tocPhysical: document.getElementById("toc-physical"),
-      tocAi: document.getElementById("toc-ai")
+      container: document.getElementById("demo-container"),
+      count: document.getElementById("demo-count"),
+      category: document.getElementById("filter-category"),
+      distortion: document.getElementById("filter-distortion"),
+      search: document.getElementById("filter-search")
     };
 
-    function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        "\"": "&quot;",
-        "'": "&#39;"
-      }[char]));
+    function esc(v) {
+      return String(v).replace(/[&<>"']/g, c =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     }
 
-    function pathHref(value) {
-      return encodeURI(String(value)).replace(/#/g, "%23");
+    function unique(arr, key) {
+      return [...new Set(arr.map(r => r[key]))].sort((a, b) =>
+        String(a).localeCompare(String(b), undefined, { numeric: true }));
     }
 
-    function categorySlug(value) {
-      return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    }
-
-    function optionList(rows, key) {
-      return [...new Set(rows.map((row) => row[key]))].sort((a, b) => {
-        return String(a).localeCompare(String(b), undefined, { numeric: true });
-      });
-    }
-
-    function fillSelect(select, values) {
-      const current = select.value;
-      select.innerHTML = '<option value="">All</option>' + values.map((value) => {
-        return `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`;
-      }).join("");
-      select.value = values.includes(current) ? current : "";
-    }
-
-    function populateFilters() {
-      fillSelect(els.category, optionList(state.rows, "category"));
-      fillSelect(els.distortion, optionList(state.rows, "distortion"));
-      fillSelect(els.group, optionList(state.rows, "source_group"));
-    }
-
-    function updateTocCounts() {
-      const counts = state.rows.reduce((acc, row) => {
-        acc[row.category] = (acc[row.category] || 0) + 1;
-        return acc;
-      }, {});
-      els.tocDigital.textContent = `${counts["Digital-level"] || 0} clips`;
-      els.tocPhysical.textContent = `${counts["Physical-level"] || 0} clips`;
-      els.tocAi.textContent = `${counts["AI-induced"] || 0} clips`;
+    function fillSelect(sel, values, placeholder) {
+      const cur = sel.value;
+      sel.innerHTML = `<option value="">${placeholder}</option>` +
+        values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
+      sel.value = values.includes(cur) ? cur : "";
     }
 
     function applyFilters() {
-      const category = els.category.value;
-      const distortion = els.distortion.value;
-      const group = els.group.value;
-      const query = els.search.value.trim().toLowerCase();
+      const cat = els.category.value;
+      const dist = els.distortion.value;
+      const q = els.search.value.trim().toLowerCase();
 
-      state.filtered = state.rows.filter((row) => {
-        if (category && row.category !== category) return false;
-        if (distortion && row.distortion !== distortion) return false;
-        if (group && row.source_group !== group) return false;
-        if (!query) return true;
-        return [
-          row.category,
-          row.distortion,
-          row.setting,
-          row.source_group,
-          row.selected_file,
-          row.source,
-          row.clip
-        ].some((value) => {
-          return String(value).toLowerCase().includes(query);
+      state.filtered = state.rows.filter(r => {
+        if (cat && r.category !== cat) return false;
+        if (dist && r.distortion !== dist) return false;
+        if (q && ![r.category, r.distortion, r.setting, r.source_group]
+          .some(v => String(v).toLowerCase().includes(q))) return false;
+        return true;
+      });
+
+      renderGroups();
+    }
+
+    function renderGroups() {
+      const rows = state.filtered;
+      els.count.textContent = `${rows.length} of ${state.rows.length} demo clips`;
+
+      const catOrder = ["Digital-level", "Physical-level", "AI-induced"];
+      const catClass = { "Digital-level": "cat-digital", "Physical-level": "cat-physical", "AI-induced": "cat-ai" };
+
+      const byCat = {};
+      rows.forEach(r => {
+        if (!byCat[r.category]) byCat[r.category] = {};
+        if (!byCat[r.category][r.distortion]) byCat[r.category][r.distortion] = [];
+        byCat[r.category][r.distortion].push(r);
+      });
+
+      let html = "";
+
+      catOrder.forEach(cat => {
+        if (!byCat[cat]) return;
+        html += `<div class="category-banner ${catClass[cat]}">${esc(cat)} Distortions</div>`;
+
+        const distortions = Object.keys(byCat[cat]).sort();
+        distortions.forEach(dist => {
+          const samples = byCat[cat][dist];
+          const groupId = `grp-${cat}-${dist}`.replace(/[^a-zA-Z0-9-]/g, "_");
+
+          const bySettingMap = {};
+          const settingOrder = [];
+          samples.forEach(r => {
+            if (!bySettingMap[r.setting]) {
+              bySettingMap[r.setting] = [];
+              settingOrder.push(r.setting);
+            }
+            bySettingMap[r.setting].push(r);
+          });
+
+          html += `<div class="distortion-group" id="${groupId}">`;
+          html += `<div class="distortion-group-header" onclick="toggleGroup('${groupId}')">
+            <span class="group-title">${esc(dist)}</span>
+            <span class="group-meta">
+              <span>${samples.length} clips &middot; ${settingOrder.length} settings</span>
+              <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </span>
+          </div>`;
+          html += `<div class="distortion-group-body">`;
+
+          settingOrder.forEach((setting, si) => {
+            const settingSamples = bySettingMap[setting];
+            const settingId = `${groupId}-s${si}`;
+            const firstSample = settingSamples[0];
+            const metricStr = firstSample.metrics
+              ? `Bit Acc: ${firstSample.metrics.bit_accuracy !== null ? Number(firstSample.metrics.bit_accuracy).toFixed(3) : "—"}`
+              : "";
+
+            html += `<div class="setting-group${settingSamples.length === 1 ? " open" : ""}" id="${settingId}">`;
+            html += `<div class="setting-header" onclick="toggleSetting('${settingId}')">
+              <span class="setting-name">${esc(setting)}</span>
+              <span class="setting-info">${settingSamples.length} sample${settingSamples.length > 1 ? "s" : ""} ${metricStr ? "&middot; " + metricStr : ""}</span>
+            </div>`;
+            html += `<div class="setting-body">`;
+
+            const showCount = Math.min(INITIAL_SHOW, settingSamples.length);
+            settingSamples.forEach((r, idx) => {
+              const hidden = idx >= showCount ? ' style="display:none"' : "";
+              const clipHref = encodeURI(String(r.clip)).replace(/#/g, "%23");
+              const dataset = r.source_group || "";
+              const dur = Number(r.duration_seconds).toFixed(1);
+              html += `<div class="sample-row" data-setting-id="${settingId}"${hidden}>
+                <span class="sample-idx">${idx + 1}</span>
+                <span class="sample-info">
+                  <strong>${esc(dataset)}</strong>
+                  ${dur}s clip
+                </span>
+                <audio controls preload="none" src="${esc(clipHref)}"></audio>
+              </div>`;
+            });
+
+            if (settingSamples.length > INITIAL_SHOW) {
+              html += `<button class="show-more-btn" onclick="showMore('${settingId}', this)">
+                Show ${settingSamples.length - INITIAL_SHOW} more samples
+              </button>`;
+            }
+
+            html += `</div></div>`;
+          });
+
+          html += `</div></div>`;
         });
       });
 
-      renderRows();
+      els.container.innerHTML = html;
     }
 
-    function renderRows() {
-      els.count.textContent = `${state.filtered.length} of ${state.rows.length} demo clips shown`;
-      let activeCategory = "";
-      let visibleIndex = 0;
-      els.tbody.innerHTML = state.filtered.map((row) => {
-        const duration = Number(row.duration_seconds).toFixed(2);
-        const start = Number(row.start_seconds).toFixed(2);
-        const clipHref = pathHref(row.clip);
-        const sourceHref = pathHref(row.source);
-        const groupRow = row.category === activeCategory ? "" : `
-          <tr class="group-row" id="${categorySlug(row.category)}">
-            <th colspan="8">${escapeHtml(row.category)}</th>
-          </tr>`;
-        activeCategory = row.category;
-        visibleIndex += 1;
-        return `
-          ${groupRow}
-          <tr>
-            <td>${visibleIndex}</td>
-            <td>${escapeHtml(row.category)}</td>
-            <td>${escapeHtml(row.distortion)}</td>
-            <td>${escapeHtml(row.setting)}</td>
-            <td>${escapeHtml(row.source_group)}</td>
-            <td><audio controls preload="none" src="${escapeHtml(clipHref)}"></audio></td>
-            <td><code>${duration}s from ${start}s</code></td>
-            <td class="source"><a href="${escapeHtml(sourceHref)}">${escapeHtml(row.source)}</a></td>
-          </tr>`;
-      }).join("");
+    function toggleGroup(id) {
+      document.getElementById(id).classList.toggle("open");
     }
 
-    async function loadRows() {
+    function toggleSetting(id) {
+      document.getElementById(id).classList.toggle("open");
+    }
+
+    function showMore(settingId, btn) {
+      document.querySelectorAll(`.sample-row[data-setting-id="${settingId}"]`).forEach(el => {
+        el.style.display = "";
+      });
+      btn.remove();
+    }
+
+    async function init() {
       try {
-        const response = await fetch("demo_audio_clips/manifest.json");
-        if (!response.ok) {
-          throw new Error(`manifest returned ${response.status}`);
-        }
-        state.rows = await response.json();
+        const resp = await fetch("demo_audio_clips/manifest.json");
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        state.rows = await resp.json();
         state.filtered = state.rows;
-        populateFilters();
-        updateTocCounts();
-        applyFilters();
-      } catch (error) {
-        els.count.textContent = "Could not load demo_audio_clips/manifest.json. Use GitHub Pages or a local static server.";
+
+        fillSelect(els.category, unique(state.rows, "category"), "All categories");
+        fillSelect(els.distortion, unique(state.rows, "distortion"), "All distortions");
+
+        renderGroups();
+      } catch (e) {
+        els.count.textContent = "Could not load audio manifest. Serve this page via HTTP (not file://).";
       }
     }
 
-    [els.category, els.distortion, els.group].forEach((el) => {
-      el.addEventListener("change", applyFilters);
+    els.category.addEventListener("change", () => {
+      if (els.category.value) {
+        const sub = state.rows.filter(r => r.category === els.category.value);
+        fillSelect(els.distortion, unique(sub, "distortion"), "All distortions");
+      } else {
+        fillSelect(els.distortion, unique(state.rows, "distortion"), "All distortions");
+      }
+      applyFilters();
     });
+    els.distortion.addEventListener("change", applyFilters);
     els.search.addEventListener("input", applyFilters);
 
-    document.querySelectorAll("[data-category-link]").forEach((link) => {
-      link.addEventListener("click", () => {
-        els.category.value = link.dataset.categoryLink;
-        applyFilters();
-      });
-    });
-
-    loadRows();
+    init();
   </script>
 </body>
 </html>

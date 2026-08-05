@@ -1,39 +1,13 @@
 # Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement Study
 
-This repository contains the experiment code and reviewer audio demo for the
-measurement study:
+This repository contains the experiment code and audio demo for the measurement
+study:
 
 > **Is Audio Watermarking Robust to Removal Attacks? A Comprehensive Measurement
 > Study**
 
-The project evaluates whether current audio watermarking systems survive
-quality-preserving removal attacks. It combines a component-wise survey of 26
-watermarking schemes with a large-scale benchmark of 10 reproducible,
-open-source methods across speech and music.
-
-For a reviewer-friendly audio demo overview, open the project page:
-
-- [Audio demo project overview](https://anonymous.4open.science/w/sok-6DB0/)
-
-The page is backed by `index.html` and the clipped audio files under
-`demo_audio_clips/`.
-
-## What This Repo Contains
-
-- `scripts/`: benchmark runners, timing scripts, reporting utilities, and
-  preflight checks
-- `ai_distortions_code/`: TTS and voice-conversion distortion pipelines used for
-  AI-induced removal attacks
-- `demo_audio_clips/`: 10-second-or-shorter reviewer previews generated from
-  the demo audio
-- `requirements/`: per-method dependency manifests
-- `repos/README.md`: expected layout for third-party method repositories
-- top-level `*_watermarking_gpu.py` files: classic watermarking baselines used
-  by the Kosta-method wrappers
-- `index.html`: static GitHub Pages overview for reviewers
-
-The public package intentionally excludes generated benchmark outputs, local
-virtual environments, private logs, and machine-specific paths.
+For an audio demo overview, open the
+[project page](https://anonymous.4open.science/w/sok-6DB0/).
 
 ## Paper Snapshot
 
@@ -52,132 +26,63 @@ The benchmark reproduces 10 audio watermarking methods:
 | Patchwork | Traditional | `scripts/13_large_kosta.py` |
 | Norm-space | Traditional | `scripts/13_large_kosta.py` |
 
-The paper evaluation covers:
+The evaluation covers 5 speech/music datasets, 3 attack families
+(digital-level, physical-level, AI-induced), and 127 attack settings. No
+evaluated method is robust to every tested quality-preserving removal attack;
+pitch shift, physical re-recording, and AI-induced voice conversion or TTS are
+the major failure modes.
 
-- 5 speech/music datasets: LJSpeech, LibriSpeech, DAPS, M4Singer, and MoisesDB
-- 3 attack families: digital-level, physical-level, and AI-induced distortions
-- 127 attack settings in the current evaluation section
-- metrics for watermark recovery and perceptual quality, including bit accuracy,
-  SI-SNR, PESQ, ESTOI, ViSQOL, SECS, and subjective MUSHRA scores
+## Interactive Watermarking Demo (Docker + Gradio)
 
-The main takeaway is that no evaluated method is robust to every tested
-quality-preserving removal attack. Pitch shift, physical re-recording, and
-AI-induced voice conversion or TTS are the major failure modes.
+An evaluation-friendly, one-command package of the benchmark: upload a single
+audio file, embed watermarks with one or more methods, apply digital-level
+distortions, and inspect robustness metrics — all from a browser UI.
 
-## Setup
+![Gradio demo interface](assets/demo-screenshot.png)
 
-This project uses separate Python environments because the evaluated methods
-depend on incompatible Python, PyTorch, TensorFlow, and CUDA versions. Treat the
-files under `requirements/` as reference manifests, then adjust CUDA wheels and
-Python minor versions for your host as needed.
-
-Example:
+### Quick start
 
 ```bash
-python -m venv envs/viz
-envs/viz/bin/pip install -r requirements/viz.txt
-
-python -m venv envs/audioseal
-envs/audioseal/bin/pip install -r requirements/audioseal.txt
+./install.sh
 ```
 
-Install system tools separately:
+The script:
 
-- `ffmpeg`
-- `audiowmark`, exposed through `SOK_AUDIOWMARK_BIN`
-- CUDA libraries required by the specific GPU environments
+1. installs Docker if it is missing (Linux; on macOS it points you to Docker
+   Desktop),
+2. builds the demo image (all Python and system dependencies across three
+   isolated environments, the `audiowmark` CLI compiled from source, and
+   pre-downloaded model checkpoints for AudioSeal / WavMark / SilentCipher;
+   Timbre / RobustDNN checkpoints are vendored under `repos/`),
+3. starts the demo at <http://localhost:7860>.
 
-Several methods also require external upstream repositories or checkpoints. See
-[`repos/README.md`](repos/README.md) for the expected repository layout.
+## Datasets
 
-## Configuration
+Five public speech/music datasets, randomly sampled with a fixed seed (42):
 
-Set machine-local paths with environment variables or edit `scripts/config.py`.
-The most important variables are:
+| Dataset | Domain | Clips used | Source |
+| --- | --- | --- | --- |
+| LJSpeech | speech | 2,000 of 13,100 | <https://keithito.com/LJ-Speech-Dataset/> |
+| LibriSpeech | speech | 2,000 sampled | <https://www.openslr.org/12> |
+| DAPS | speech | 100 sampled | <https://zenodo.org/records/4660670> |
+| M4Singer | music (singing) | 2,000 sampled | <https://github.com/M4Singer/M4Singer> |
+| MoisesDB | music (multitrack) | 2,000 sampled | <https://github.com/moises-ai/moises-db> |
 
-- `SOK_STORAGE_DIR`
-- `SOK_DATASET_DIR`
-- `SOK_NOISE_DIR`
-- `SOK_RIR_DIR`
-- `SOK_AUDIOWMARK_BIN`
-- `SOK_AUDIOWMARK_LIB`
-- `SOK_NVIDIA_BASE`
-- `SOK_PTXAS_DIR`
+## Running Benchmark
 
-Run the preflight check before launching full benchmarks:
+One command runs all 10 methods × all automated attack settings × every dataset
+present under `SOK_DATASET_DIR`:
 
 ```bash
-envs/viz/bin/python scripts/preflight.py
+./run_benchmarks.sh                              # everything
+./run_benchmarks.sh --methods audioseal,kosta    # a subset
 ```
 
-## Running Benchmarks
-
-Each `scripts/13_large_*.py` file embeds a method-specific watermark, applies
-the configured distortion suite, decodes the watermark, and writes aggregate
-JSON results under `results/benchmark/{dataset_key}/{algorithm}.json`.
-
-Examples:
-
-```bash
-envs/audioseal/bin/python scripts/13_large_audioseal.py
-envs/timbre/bin/python scripts/13_large_timbre.py
-envs/dnn_wm/bin/python scripts/13_large_dnn.py
-envs/kosta/bin/python scripts/13_large_kosta.py
-```
-
-The shared benchmark utility supports checkpoint resume. If a run is interrupted,
-rerun the same command and completed files will be skipped.
-
-## Timing Experiments
-
-Timing scripts are under `scripts/14_timing_*.py`. They measure method-level
-embed/decode cost and write results under `results/timing/`.
-
-```bash
-envs/audioseal/bin/python scripts/14_timing_audioseal.py
-envs/wavmark/bin/python scripts/14_timing_wavmark.py
-python scripts/14_timing_report.py
-```
-
-## Reporting
-
-Build a dataset workbook from completed benchmark JSON files:
-
-```bash
-python3 scripts/18_dataset_full_excel.py \
-  --dataset speech_ljspeech \
-  --out results/speech_ljspeech_full.xlsx \
-  --suffixes __plain__
-```
-
-Generated outputs are intentionally not committed. See
-[`results/README.md`](results/README.md) for the expected output structure.
-
-## Demo Media
-
-The reviewer audio demo page is available here:
-
-- [Audio demo project overview](https://anonymous.4open.science/w/sok-6DB0/)
-
-It includes:
-
-- an audio-first table grouped into digital-level, physical-level, and
-  AI-induced distortions
-- 702 MP3 previews under `demo_audio_clips/`, each capped at 10 seconds
-- one representative clip per setting-level distortion condition
-- a manifest under `demo_audio_clips/manifest.json` used by `index.html`
-
-Rebuild the clipped audio previews and manifest with:
-
-```bash
-python3 scripts/build_reviewer_audio_demo.py
-```
-
-## Reproducibility Notes
-
-- Keep full benchmark results separate from reduced-sample validation runs.
-- Use reduced sample counts only for bring-up or debugging, and label those
-  outputs separately from full benchmark results.
-- Do not commit local datasets, model checkpoints, logs, or generated outputs.
-- If upstream method APIs change, prefer updating the corresponding wrapper
-  script instead of changing shared benchmark semantics.
+For each method and dataset, the runner embeds the watermark, applies 116
+automated attack settings across 12 distortion types (pitch shift, time stretch,
+Gaussian noise, bitcrush, MP3, background noise, cutting, high/low-pass, sample
+suppression, resampling, reverberation), decodes the watermark from each
+distorted clip, and measures bit accuracy plus SI-SNR, PESQ, ESTOI, ViSQOL, and
+SECS against the clean original. The physical re-recording and AI-induced
+attacks (under `ai_distortions_code/`) that complete the 127 settings need
+hardware or separate model pipelines and are not part of this script.

@@ -1,0 +1,18 @@
+# Keep the demo image lean — exclude data, results, and web assets that the
+# Gradio demo does not need.
+.git
+.gitignore
+demo_audio_clips/
+results/
+assets/
+accuracy.xlsx
+index.html
+ai_distortions_code/
+scripts/__pycache__/
+**/__pycache__/
+envs/
+outputs/
+data/
+Dockerfile
+.dockerignore
+install.sh

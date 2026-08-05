@@ -1,0 +1,9 @@
+# Venv for the RobustDNN (DNN-WM) worker.  TensorFlow 2.12 requires
+# numpy<1.24, which is why this cannot share an environment with anything
+# else.  soxr replaces librosa for resampling (librosa<0.10 would drag in a
+# numba version incompatible with this Python).
+
+tensorflow-cpu==2.12.0
+numpy==1.23.5
+soundfile==0.12.1
+soxr==0.3.7
