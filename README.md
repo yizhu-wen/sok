@@ -38,6 +38,8 @@ An evaluation-friendly, one-command package of the benchmark: upload a single
 audio file, embed watermarks with one or more methods, apply digital-level
 distortions, and inspect robustness metrics — all from a browser UI.
 
+![Gradio demo interface](assets/demo-screenshot.png)
+
 ### Quick start
 
 ```bash
